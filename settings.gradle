@@ -1,0 +1,3 @@
+include ':libmultispinner'
+include ':app'
+rootProject.name = "MobileDLSearch"
