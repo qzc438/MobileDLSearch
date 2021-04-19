@@ -1,6 +1,7 @@
 package com.qzc.mobiledlsearch.fragment;
 
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class SearchFragment extends Fragment {
 
     private void createItems() {
         addItem("Application", new String[]{"Domain", "Area"}, R.color.pink);
-        addItem("Data", new String[]{"Subject", "Sensor Type", "Base", "Activity Type", "Location"}, R.color.yellow);
+        addItem("Data", new String[]{"Subject", "Sensor Type", "Sensor Base", "Activity Type", "Location"}, R.color.yellow);
         addItem("Model", new String[]{"Backend", "Model Type", "Loss Function", "Optimiser", "Performance"}, R.color.green);
         addItem("Layer", new String[]{"Layer Type", "Activation", "Argument"}, R.color.blue);
     }
@@ -67,7 +68,9 @@ public class SearchFragment extends Fragment {
             item.setIndicatorColorRes(colorRes);
             //item.setIndicatorIconRes(iconRes);
             //It is possible to get any view inside the inflated layout. Let's set the text in the item
-            ((TextView) item.findViewById(R.id.title)).setText(title);
+            TextView tv_title = (TextView) item.findViewById(R.id.title);
+            tv_title.setText(title);
+            tv_title.getPaint().setFakeBoldText(true);
 
             //We can create items in batch.
             item.createSubItems(subItems.length);
@@ -116,7 +119,7 @@ public class SearchFragment extends Fragment {
             multiSelectionListSpinner.setTitle(subTitle);
             multiSelectionListSpinner.setItems(myList);
             multiSelectionListSpinner.setSelection(new int[]{0, 1});
-        }else if (subTitle.equals("Base")){
+        }else if (subTitle.equals("Sensor Base")){
             List<String> myList = new ArrayList<>();
             myList.add("Arm");
             myList.add("Belt");
