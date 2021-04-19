@@ -42,7 +42,7 @@ public class OverviewFragment extends Fragment {
 
     private final String[] times = {"Aug 1 - Dec 15    7:00-18:00", "Sep 5 - Nov 10    8:00-16:00", "Mar 8 - May 21    7:00-18:00"};
 
-    private final SliderAdapter sliderAdapter = new SliderAdapter(pics, 20, new OnCardClickListener());
+    private final SliderAdapter sliderAdapter = new SliderAdapter(pics, 5, new OnCardClickListener());
 
     private CardSliderLayoutManager layoutManger;
     private RecyclerView recyclerView;
