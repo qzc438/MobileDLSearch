@@ -17,12 +17,14 @@ import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.util.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class SearchFragment extends Fragment {
 
     private static final String EXTRA_TEXT = "text";
+    private TextView fragmentText;
     private ExpandingList mExpandingList;
 
     public static SearchFragment createFor(String text) {
@@ -41,35 +43,29 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        Bundle args = getArguments();
-//        final String text = args != null ? args.getString(EXTRA_TEXT) : "";
-//        TextView textView = view.findViewById(R.id.text);
-//        textView.setText(text);
-//        textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(v.getContext(), text, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        Bundle args = getArguments();
+        String text = args != null ? args.getString(EXTRA_TEXT) : "";
+        fragmentText = view.findViewById(R.id.fragment_text);
+        fragmentText.setText(text);
         mExpandingList = view.findViewById(R.id.expanding_list_main);
         createItems();
     }
 
     private void createItems() {
-        addItem("Application", new String[]{"Domain", "Area"}, R.color.pink, R.drawable.ic_ghost);
-        addItem("Data", new String[]{"Subject", "Sensor", "Activity"}, R.color.yellow, R.drawable.ic_ghost);
-        addItem("Model", new String[]{"Model Type", "Loss Function", "Optimiser", "Performance"}, R.color.green, R.drawable.ic_ghost);
-        addItem("Layer", new String[]{"Core Layer", "Functional layer"}, R.color.blue, R.drawable.ic_ghost);
+        addItem("Application", new String[]{"Domain", "Area"}, R.color.pink);
+        addItem("Data", new String[]{"Subject", "Sensor Type", "Base", "Activity Type", "Location"}, R.color.yellow);
+        addItem("Model", new String[]{"Backend", "Model Type", "Loss Function", "Optimiser", "Performance"}, R.color.green);
+        addItem("Layer", new String[]{"Layer Type", "Activation", "Argument"}, R.color.blue);
     }
 
-    private void addItem(String title, String[] subItems, int colorRes, int iconRes) {
+    private void addItem(String title, String[] subItems, int colorRes) {
         //Let's create an item with R.layout.expanding_layout
         final ExpandingItem item = mExpandingList.createNewItem(R.layout.expanding_layout);
 
         //If item creation is successful, let's configure it
         if (item != null) {
             item.setIndicatorColorRes(colorRes);
-            item.setIndicatorIconRes(iconRes);
+            //item.setIndicatorIconRes(iconRes);
             //It is possible to get any view inside the inflated layout. Let's set the text in the item
             ((TextView) item.findViewById(R.id.title)).setText(title);
 
@@ -89,33 +85,141 @@ public class SearchFragment extends Fragment {
         MultiSelectionSpinner multiSelectionListSpinner = (MultiSelectionSpinner) view.findViewById(R.id.spinner_string_list);
         if (subTitle.equals("Domain")){
             List<String> myList = new ArrayList<>();
-            myList.add("One");
-            myList.add("Two");
-            myList.add("Three");
+            myList.add("Healthcare");
+            multiSelectionListSpinner.setTitle(subTitle);
             multiSelectionListSpinner.setItems(myList);
-            multiSelectionListSpinner.setSelection(new int[]{0, 2});
-        }else{
+            multiSelectionListSpinner.setSelection(new int[]{0});
+        }else if (subTitle.equals("Area")){
             List<String> myList = new ArrayList<>();
-            myList.add("1");
-            myList.add("2");
-            myList.add("3");
+            myList.add("Daily Life Monitoring");
+            myList.add("Personal Biometric Signature");
+            myList.add("Elderly And Youth Care");
+            multiSelectionListSpinner.setTitle(subTitle);
             multiSelectionListSpinner.setItems(myList);
-            multiSelectionListSpinner.setSelection(new int[]{1, 2});
+            multiSelectionListSpinner.setSelection(new int[]{0});
+        }else if (subTitle.equals("Subject")){
+            List<String> myList = new ArrayList<>();
+            myList.add("Single Subject");
+            myList.add("Multiple Subject");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{1});
+        }else if (subTitle.equals("Sensor Type")){
+            List<String> myList = new ArrayList<>();
+            myList.add("Accelerometer");
+            myList.add("Gyroscope");
+            myList.add("Magnetometer");
+            myList.add("Pressure Sensor");
+            myList.add("Temperature Sensor");
+            myList.add("Humidity Sensor");
+            myList.add("Camera");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{0, 1});
+        }else if (subTitle.equals("Base")){
+            List<String> myList = new ArrayList<>();
+            myList.add("Arm");
+            myList.add("Belt");
+            myList.add("Pocket");
+            myList.add("Waist");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{2});
+        }else if (subTitle.equals("Activity Type")){
+            List<String> myList = new ArrayList<>();
+            myList.add("Living Activity");
+            myList.add("Working Activity");
+            myList.add("Health Activity");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{2});
+        }else if (subTitle.equals("Location")){
+            List<String> myList = new ArrayList<>();
+            myList.add("Single Location");
+            myList.add("Multiple Location");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{0});
+        }else if (subTitle.equals("Backend")){
+            List<String> myList = new ArrayList<>();
+            myList.add("TensorFlow");
+            myList.add("Keras");
+            myList.add("Pytorch");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{2});
+        }else if (subTitle.equals("Model Type")){
+            List<String> myList = new ArrayList<>();
+            myList.add("CNN");
+            myList.add("RNN");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{0});
+        }else if (subTitle.equals("Loss Function")) {
+            List<String> myList = new ArrayList<>();
+            myList.add("Binary Crossentropy");
+            myList.add("Categorical Crossentropy");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{1});
+        }else if (subTitle.equals("Optimiser")) {
+            List<String> myList = new ArrayList<>();
+            myList.add("Adam");
+            myList.add("SGD");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{0});
+        }else if (subTitle.equals("Performance")) {
+            List<String> myList = new ArrayList<>();
+            myList.add("Loss");
+            myList.add("Accruacy");
+            myList.add("Precision");
+            myList.add("Recall");
+            myList.add("F1 Score");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{1});
+        }else if (subTitle.equals("Layer Type")) {
+            List<String> myList = new ArrayList<>();
+            myList.add("Convolution Layer");
+            myList.add("Recurrent Layer");
+            myList.add("Dense Layer");
+            myList.add("Reshaping Layer");
+            myList.add("Pooling Layer");
+            myList.add("Dropout Layer");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{0});
+        } else if (subTitle.equals("Activation")) {
+            List<String> myList = new ArrayList<>();
+            myList.add("ReLU");
+            myList.add("Softmax");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{0});
+        } else if (subTitle.equals("Argument")) {
+            List<String> myList = new ArrayList<>();
+            myList.add("Initialiser");
+            myList.add("Constraint");
+            myList.add("Regulariser");
+            multiSelectionListSpinner.setTitle(subTitle);
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{1});
+        } else {
+            List<String> myList = new ArrayList<>();
+            myList.add("No options available");
+            multiSelectionListSpinner.setTitle("Unknown");
+            multiSelectionListSpinner.setItems(myList);
+            multiSelectionListSpinner.setSelection(new int[]{0});
         }
+
         multiSelectionListSpinner.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
             @Override
             public void selectedIndices(List<Integer> indices, MultiSelectionSpinner spinner) {
             }
             @Override
             public void selectedStrings(List<String> strings, MultiSelectionSpinner spinner) {
-                switch (spinner.getId()) {
-                    case R.id.spinner_string_array:
-                        ToastUtil.showText(SearchFragment.this.getActivity(), "Array : " + strings.toString());
-                        break;
-                    case R.id.spinner_string_list:
-                        ToastUtil.showText(SearchFragment.this.getActivity(), "List : " + strings.toString());
-                        break;
-                }
+                ToastUtil.showText(SearchFragment.this.getActivity(), "List : " + strings.toString()+", Title: " + spinner.getTitle());
             }
         });
 

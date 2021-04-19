@@ -2,6 +2,7 @@
     <string name="app_name">Mobile DL Search</string>
     <string name="welcome">Welcome</string>
     <string name="username">Wilson</string>
+    <string name="location">Location</string>
     <string name="action_settings">Settings</string>
     <string name="enter_title">Enter Title</string>
     <string name="text1">The museum is housed in the Louvre Palace, originally built as a fortress in the late 12th century…</string>

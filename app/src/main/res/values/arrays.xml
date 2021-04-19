@@ -11,12 +11,12 @@
     </string-array>
 
     <array name="ld_activityScreenIcons">
-        <item>@drawable/ic_home_outline_grey600_24dp</item>
-        <item>@drawable/ic_account_outline_grey600_24dp</item>
-        <item>@drawable/ic_email_outline_grey600_24dp</item>
-        <item>@drawable/ic_cart_outline_grey600_24dp</item>
+        <item>@drawable/outline_filter_alt_black_24</item>
+        <item>@drawable/outline_list_alt_black_24</item>
+        <item>@drawable/outline_summarize_black_24</item>
+        <item>@drawable/outline_construction_black_24</item>
         <item>0</item>
-        <item>@drawable/ic_logout_grey600_24dp</item>
+        <item>@drawable/outline_logout_black_24</item>
     </array>
 
 </resources>
