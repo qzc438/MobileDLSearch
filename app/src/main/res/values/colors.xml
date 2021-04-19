@@ -17,6 +17,7 @@
     <color name="colorBackground">#241445</color>
     <color name="separatorColor">#18102C</color>
 
+    <color name="red">#ffff4444</color>
     <color name="pink">#FF308E</color>
     <color name="orange">#FA9301</color>
     <color name="yellow">#F8D411</color>
@@ -24,8 +25,8 @@
     <color name="purple">#6F26FA</color>
     <color name="green">#49CC56</color>
 
-    <color name="temperature_background">@color/blue</color>
-    <color name="temperature_text">@android:color/white</color>
+    <color name="area_background">@color/red</color>
+    <color name="area_text">@android:color/white</color>
 
     <color name="green_dot_big">@color/blue</color>
     <color name="green_dot_small">@color/blue</color>

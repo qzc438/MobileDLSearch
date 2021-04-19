@@ -17,7 +17,7 @@
             android:id="@+id/location_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/location"
+            android:text="@string/step_one"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"/>

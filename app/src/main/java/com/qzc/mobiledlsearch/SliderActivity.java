@@ -63,7 +63,7 @@ public class SliderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
+        setContentView(R.layout.fragment_overview);
 
         initRecyclerView();
         initCountryText();
@@ -99,8 +99,8 @@ public class SliderActivity extends AppCompatActivity {
     }
 
     private void initSwitchers() {
-        temperatureSwitcher = (TextSwitcher) findViewById(R.id.ts_temperature);
-        temperatureSwitcher.setFactory(new TextViewFactory(R.style.TemperatureTextView, true));
+        temperatureSwitcher = (TextSwitcher) findViewById(R.id.ts_domain);
+        temperatureSwitcher.setFactory(new TextViewFactory(R.style.DomainTextView, true));
         temperatureSwitcher.setCurrentText(temperatures[0]);
 
         placeSwitcher = (TextSwitcher) findViewById(R.id.ts_place);
@@ -136,8 +136,8 @@ public class SliderActivity extends AppCompatActivity {
         countryAnimDuration = getResources().getInteger(R.integer.labels_animation_duration);
         countryOffset1 = getResources().getDimensionPixelSize(R.dimen.left_offset);
         countryOffset2 = getResources().getDimensionPixelSize(R.dimen.card_width);
-        country1TextView = (TextView) findViewById(R.id.tv_country_1);
-        country2TextView = (TextView) findViewById(R.id.tv_country_2);
+        country1TextView = (TextView) findViewById(R.id.tv_application_1);
+        country2TextView = (TextView) findViewById(R.id.tv_application_2);
 
         country1TextView.setX(countryOffset1);
         country2TextView.setX(countryOffset2);
