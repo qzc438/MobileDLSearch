@@ -6,3 +6,4 @@ Mobile DL Search
 ### Spinner: https://github.com/GunaseelanArumaikkannu/MultiSpinner
 ### Card slider: https://github.com/ThanhThuy1803/cardslider-android
 ### Progress bar: https://github.com/dinuscxj/CircleProgressBar
+### Dialog: https://github.com/afollestad/material-dialogs
