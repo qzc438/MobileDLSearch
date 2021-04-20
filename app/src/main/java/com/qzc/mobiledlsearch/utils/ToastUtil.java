@@ -1,4 +1,4 @@
-package com.qzc.mobiledlsearch.util;
+package com.qzc.mobiledlsearch.utils;
 
 import android.app.Activity;
 import android.util.Log;

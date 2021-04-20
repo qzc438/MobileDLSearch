@@ -6,6 +6,10 @@
     <string name="step_two">Step 2</string>
     <string name="step_three">Step 3</string>
     <string name="step_four">Step 4</string>
+    <string name="search">Search</string>
+    <string name="view_data_detail">View Data Detail</string>
+    <string name="view_model_detail">View Model Detail</string>
+    <string name="view_layer_detail">View Layer Detail</string>
     <string name="performance_accuracy">Accuracy</string>
     <string name="performance_precision">Precision</string>
     <string name="performance_recall">Recall</string>

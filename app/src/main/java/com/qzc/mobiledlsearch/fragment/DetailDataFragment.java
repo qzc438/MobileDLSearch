@@ -1,7 +1,6 @@
 package com.qzc.mobiledlsearch.fragment;
 
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
-import com.guna.libmultispinner.MultiSelectionSpinner;
 import com.qzc.mobiledlsearch.R;
-import com.qzc.mobiledlsearch.util.ToastUtil;
-import com.qzc.mobiledlsearch.utils.TextJustification;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class DetailDataFragment extends Fragment {

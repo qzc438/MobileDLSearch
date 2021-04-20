@@ -1,13 +1,11 @@
 package com.qzc.mobiledlsearch.fragment;
 
 import android.os.Bundle;
-import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,10 +14,9 @@ import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 import com.guna.libmultispinner.MultiSelectionSpinner;
 import com.qzc.mobiledlsearch.R;
-import com.qzc.mobiledlsearch.util.ToastUtil;
+import com.qzc.mobiledlsearch.utils.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 

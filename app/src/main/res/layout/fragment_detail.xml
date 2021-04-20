@@ -20,7 +20,7 @@
             android:text="@string/step_three"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -62,6 +62,6 @@
         android:id="@+id/expanding_list_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="40dp" />
 
 </FrameLayout>

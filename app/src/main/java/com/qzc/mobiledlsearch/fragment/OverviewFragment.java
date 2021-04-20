@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
@@ -22,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
+import com.ornach.nobobutton.NoboButton;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.cards.SliderAdapter;
 
@@ -63,6 +65,9 @@ public class OverviewFragment extends Fragment {
     private CircleProgressBar progressRecall;
     private CircleProgressBar progressF1Score;
 
+    private NoboButton btnDataDetail;
+    private NoboButton btnModelDetail;
+    private NoboButton btnLayerDetail;
 
     public static OverviewFragment createFor(String text) {
         OverviewFragment fragment = new OverviewFragment();
@@ -102,6 +107,33 @@ public class OverviewFragment extends Fragment {
         progressRecall.setProgress(50);
         progressF1Score = (CircleProgressBar)view.findViewById(R.id.progress_f1score);
         progressF1Score.setProgress(75);
+
+        btnDataDetail = (NoboButton)view.findViewById(R.id.btn_view_data_detail);
+        btnDataDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment selectedScreen = DetailDataFragment.createFor("Detail", "Data");
+                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
+            }
+        });
+
+        btnModelDetail = (NoboButton)view.findViewById(R.id.btn_view_model_detail);
+        btnModelDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment selectedScreen = DetailModelFragment.createFor("Detail", "Model");
+                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
+            }
+        });
+
+        btnLayerDetail = (NoboButton)view.findViewById(R.id.btn_view_layer_detail);
+        btnLayerDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment selectedScreen = DetailLayerFragment.createFor("Detail", "Model");
+                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
+            }
+        });
 
         initRecyclerView();
         initApplicationText();
