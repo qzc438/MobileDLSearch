@@ -68,25 +68,25 @@ public class ExpandingActivity extends AppCompatActivity {
                 //Let's set some values in
                 configureSubItem(item, view, subItems[i]);
             }
-            item.findViewById(R.id.add_more_sub_items).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showInsertDialog(new OnItemCreated() {
-                        @Override
-                        public void itemCreated(String title) {
-                            View newSubItem = item.createSubItem();
-                            configureSubItem(item, newSubItem, title);
-                        }
-                    });
-                }
-            });
+//            item.findViewById(R.id.add_more_sub_items).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    showInsertDialog(new OnItemCreated() {
+//                        @Override
+//                        public void itemCreated(String title) {
+//                            View newSubItem = item.createSubItem();
+//                            configureSubItem(item, newSubItem, title);
+//                        }
+//                    });
+//                }
+//            });
 
-            item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mExpandingList.removeItem(item);
-                }
-            });
+//            item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mExpandingList.removeItem(item);
+//                }
+//            });
         }
     }
 

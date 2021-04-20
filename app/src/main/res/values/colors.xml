@@ -15,7 +15,7 @@
     <color name="textColorSecondary">#757575</color>
 
     <color name="colorBackground">#241445</color>
-    <color name="separatorColor">#18102C</color>
+    <color name="separatorColor">@color/colorBackground</color>
 
     <color name="red">#ffff4444</color>
     <color name="pink">#FF308E</color>

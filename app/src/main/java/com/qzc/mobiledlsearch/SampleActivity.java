@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qzc.mobiledlsearch.fragment.DetailDataFragment;
+import com.qzc.mobiledlsearch.fragment.DetailLayerFragment;
+import com.qzc.mobiledlsearch.fragment.DetailModelFragment;
 import com.qzc.mobiledlsearch.fragment.OverviewFragment;
 import com.qzc.mobiledlsearch.fragment.SearchFragment;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
@@ -93,6 +96,10 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
         }
         if (position == POS_OVERVIEW) {
             Fragment selectedScreen = OverviewFragment.createFor(screenTitles[position]);
+            showFragment(selectedScreen);
+        }
+        if (position == POS_DETAIL) {
+            Fragment selectedScreen = DetailLayerFragment.createFor(screenTitles[position], "Layer");
             showFragment(selectedScreen);
         }
     }

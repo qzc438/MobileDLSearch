@@ -103,18 +103,18 @@ public class SliderActivity extends AppCompatActivity {
         temperatureSwitcher.setFactory(new TextViewFactory(R.style.DomainTextView, true));
         temperatureSwitcher.setCurrentText(temperatures[0]);
 
-        placeSwitcher = (TextSwitcher) findViewById(R.id.ts_place);
-        placeSwitcher.setFactory(new TextViewFactory(R.style.PlaceTextView, false));
+        placeSwitcher = (TextSwitcher) findViewById(R.id.ts_data);
+        placeSwitcher.setFactory(new TextViewFactory(R.style.DataTextView, false));
         placeSwitcher.setCurrentText(places[0]);
 
-        clockSwitcher = (TextSwitcher) findViewById(R.id.ts_clock);
-        clockSwitcher.setFactory(new TextViewFactory(R.style.ClockTextView, false));
+        clockSwitcher = (TextSwitcher) findViewById(R.id.ts_layer);
+        clockSwitcher.setFactory(new TextViewFactory(R.style.LayerTextView, false));
         clockSwitcher.setCurrentText(times[0]);
 
-        descriptionsSwitcher = (TextSwitcher) findViewById(R.id.ts_description);
+        descriptionsSwitcher = (TextSwitcher) findViewById(R.id.ts_model);
         descriptionsSwitcher.setInAnimation(this, android.R.anim.fade_in);
         descriptionsSwitcher.setOutAnimation(this, android.R.anim.fade_out);
-        descriptionsSwitcher.setFactory(new TextViewFactory(R.style.DescriptionTextView, false));
+        descriptionsSwitcher.setFactory(new TextViewFactory(R.style.ModelTextView, false));
         descriptionsSwitcher.setCurrentText(getString(descriptions[0]));
 
 //        mapSwitcher = (ImageSwitcher) findViewById(R.id.ts_map);

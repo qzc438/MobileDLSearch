@@ -5,6 +5,7 @@ import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +72,19 @@ public class SearchFragment extends Fragment {
             TextView tv_title = (TextView) item.findViewById(R.id.title);
             tv_title.setText(title);
             tv_title.getPaint().setFakeBoldText(true);
+
+            item.setStateChangedListener(new ExpandingItem.OnItemStateChanged() {
+                @Override
+                public void itemCollapseStateChanged(boolean expanded) {
+                    if(item.isExpanded()){
+                        ImageView imageView = (ImageView)item.findViewById(R.id.img_expand);
+                        imageView.setImageResource(R.drawable.outline_remove_circle_outline_black_36);
+                    } else{
+                        ImageView imageView = (ImageView)item.findViewById(R.id.img_expand);
+                        imageView.setImageResource(R.drawable.outline_add_circle_outline_black_36);
+                    }
+                }
+            });
 
             //We can create items in batch.
             item.createSubItems(subItems.length);

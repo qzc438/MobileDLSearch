@@ -101,15 +101,15 @@ public class ImageFragment extends Fragment implements DecodeBitmapTask.Listener
     }
 
     private void loadFullSizeBitmap(int smallResId) {
-        int bigResId;
-        switch (smallResId) {
-            case R.drawable.p1: bigResId = R.drawable.p1_big; break;
-            case R.drawable.p2: bigResId = R.drawable.p2_big; break;
-            case R.drawable.p3: bigResId = R.drawable.p3_big; break;
-            case R.drawable.p4: bigResId = R.drawable.p4_big; break;
-            case R.drawable.p5: bigResId = R.drawable.p5_big; break;
-            default: bigResId = R.drawable.p1_big;
-        }
+//        int bigResId;
+//        switch (smallResId) {
+//            case R.drawable.p1: bigResId = R.drawable.p1_big; break;
+//            case R.drawable.p2: bigResId = R.drawable.p2_big; break;
+//            case R.drawable.p3: bigResId = R.drawable.p3_big; break;
+//            case R.drawable.p4: bigResId = R.drawable.p4_big; break;
+//            case R.drawable.p5: bigResId = R.drawable.p5_big; break;
+//            default: bigResId = R.drawable.p1_big;
+//        }
 
         final DisplayMetrics metrics = new DisplayMetrics();
         ImageFragment.this.getActivity().getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
@@ -117,7 +117,7 @@ public class ImageFragment extends Fragment implements DecodeBitmapTask.Listener
         final int w = metrics.widthPixels;
         final int h = metrics.heightPixels;
 
-        decodeBitmapTask = new DecodeBitmapTask(getResources(), bigResId, w, h, this);
+        decodeBitmapTask = new DecodeBitmapTask(getResources(), smallResId, w, h, this);
         decodeBitmapTask.execute();
     }
 

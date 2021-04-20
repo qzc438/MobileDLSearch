@@ -34,22 +34,22 @@ public class OverviewFragment extends Fragment {
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
 
-    private final int[] pics = {R.drawable.p1, R.drawable.p2, R.drawable.p3, R.drawable.p4, R.drawable.p5};
-    private final int[] descriptions = {R.string.text1, R.string.text2, R.string.text3, R.string.text4, R.string.text5};
+    private final int[] pics = {R.drawable.lstm, R.drawable.lstm_stacked, R.drawable.lstm_attantion, R.drawable.lstm, R.drawable.lstm_stacked};
     private final String[] domains = {"Healthcare", "Healthcare", "Healthcare", "Healthcare", "Healthcare"};
     private final String[] applications = {"Living Activity Recognition", "Working Activity Recognition", "Health Activity Recognition", "Living Activity Recognition", "Working Activity Recognition"};
-    private final String[] places = {"The Louvre", "Gwanghwamun", "Tower Bridge", "Temple of Heaven", "Aegeana Sea"};
-
-    private final String[] times = {"Aug 1 - Dec 15    7:00-18:00", "Sep 5 - Nov 10    8:00-16:00", "Mar 8 - May 21    7:00-18:00"};
+    private final String[] datas = {"HAR Dataset 1", "HAR Dataset 2", "HAR Dataset 3", "HAR Dataset 4", "HAR Dataset 5"};
+    private final String[] models = {"CNN", "RNN", "CNN", "RNN", "CNN"};
+    private final String[] layers = {"Convolution Layer", "LSTM Layer", "Convolution Layer", "LSTM Layer", "Convolution Layer"};
 
     private final SliderAdapter sliderAdapter = new SliderAdapter(pics, 5, new OnCardClickListener());
 
     private CardSliderLayoutManager layoutManger;
     private RecyclerView recyclerView;
     private TextSwitcher domainSwitcher;
-    private TextSwitcher placeSwitcher;
-    private TextSwitcher clockSwitcher;
-    private TextSwitcher descriptionsSwitcher;
+    private TextSwitcher dataSwitcher;
+    private TextSwitcher modelSwitcher;
+    private TextSwitcher layerSwitcher;
+
 
     private TextView application1TextView;
     private TextView application2TextView;
@@ -90,9 +90,10 @@ public class OverviewFragment extends Fragment {
         application1TextView = (TextView) view.findViewById(R.id.tv_application_1);
         application2TextView = (TextView) view.findViewById(R.id.tv_application_2);
         domainSwitcher = (TextSwitcher) view.findViewById(R.id.ts_domain);
-        placeSwitcher = (TextSwitcher) view.findViewById(R.id.ts_place);
-        clockSwitcher = (TextSwitcher) view.findViewById(R.id.ts_clock);
-        descriptionsSwitcher = (TextSwitcher) view.findViewById(R.id.ts_description);
+        dataSwitcher = (TextSwitcher) view.findViewById(R.id.ts_data);
+        modelSwitcher = (TextSwitcher) view.findViewById(R.id.ts_model);
+        layerSwitcher = (TextSwitcher) view.findViewById(R.id.ts_layer);
+
         progressAccuracy = (CircleProgressBar)view.findViewById(R.id.progress_accuracy);
         progressAccuracy.setProgress(0);
         progressPrecision = (CircleProgressBar)view.findViewById(R.id.progress_precision);
@@ -103,7 +104,7 @@ public class OverviewFragment extends Fragment {
         progressF1Score.setProgress(75);
 
         initRecyclerView();
-        initCountryText();
+        initApplicationText();
         initSwitchers();
     }
 
@@ -127,19 +128,20 @@ public class OverviewFragment extends Fragment {
         domainSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DomainTextView, true));
         domainSwitcher.setCurrentText(domains[0]);
 
-        placeSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.PlaceTextView, false));
-        placeSwitcher.setCurrentText(places[0]);
+        dataSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DataTextView, false));
+        dataSwitcher.setCurrentText(datas[0]);
 
-        clockSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.ClockTextView, false));
-        clockSwitcher.setCurrentText(times[0]);
+        modelSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.ModelTextView, false));
+        modelSwitcher.setCurrentText(models[0]);
 
-        descriptionsSwitcher.setInAnimation(OverviewFragment.this.getActivity(), android.R.anim.fade_in);
-        descriptionsSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), android.R.anim.fade_out);
-        descriptionsSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DescriptionTextView, false));
-        descriptionsSwitcher.setCurrentText(getString(descriptions[0]));
+        layerSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.LayerTextView, false));
+        layerSwitcher.setCurrentText(layers[0]);
+
+
     }
 
-    private void initCountryText() {
+    private void initApplicationText() {
+
         applicationAnimDuration = getResources().getInteger(R.integer.labels_animation_duration);
         applicationOffset1 = getResources().getDimensionPixelSize(R.dimen.left_offset);
         applicationOffset2 = getResources().getDimensionPixelSize(R.dimen.card_width);
@@ -212,15 +214,17 @@ public class OverviewFragment extends Fragment {
         domainSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animH[1]);
         domainSwitcher.setText(domains[pos % domains.length]);
 
-        placeSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
-        placeSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        placeSwitcher.setText(places[pos % places.length]);
+        dataSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
+        dataSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
+        dataSwitcher.setText(datas[pos % datas.length]);
 
-        clockSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
-        clockSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        clockSwitcher.setText(times[pos % times.length]);
+        modelSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
+        modelSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
+        modelSwitcher.setText(models[pos % models.length]);
 
-        descriptionsSwitcher.setText(getString(descriptions[pos % descriptions.length]));
+        layerSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
+        layerSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
+        layerSwitcher.setText(layers[pos % layers.length]);
 
         currentPosition = pos;
     }

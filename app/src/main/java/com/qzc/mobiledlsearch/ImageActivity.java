@@ -96,15 +96,15 @@ public class ImageActivity extends AppCompatActivity implements DecodeBitmapTask
     }
 
     private void loadFullSizeBitmap(int smallResId) {
-        int bigResId;
-        switch (smallResId) {
-            case R.drawable.p1: bigResId = R.drawable.p1_big; break;
-            case R.drawable.p2: bigResId = R.drawable.p2_big; break;
-            case R.drawable.p3: bigResId = R.drawable.p3_big; break;
-            case R.drawable.p4: bigResId = R.drawable.p4_big; break;
-            case R.drawable.p5: bigResId = R.drawable.p5_big; break;
-            default: bigResId = R.drawable.p1_big;
-        }
+//        int bigResId;
+//        switch (smallResId) {
+//            case R.drawable.p1: bigResId = R.drawable.p1_big; break;
+//            case R.drawable.p2: bigResId = R.drawable.p2_big; break;
+//            case R.drawable.p3: bigResId = R.drawable.p3_big; break;
+//            case R.drawable.p4: bigResId = R.drawable.p4_big; break;
+//            case R.drawable.p5: bigResId = R.drawable.p5_big; break;
+//            default: bigResId = R.drawable.p1_big;
+//        }
 
         final DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
@@ -112,7 +112,17 @@ public class ImageActivity extends AppCompatActivity implements DecodeBitmapTask
         final int w = metrics.widthPixels;
         final int h = metrics.heightPixels;
 
-        decodeBitmapTask = new DecodeBitmapTask(getResources(), bigResId, w, h, this);
+//        // density
+//        float density = ImageActivity.this.getResources().getDisplayMetrics().density;
+//        //getBounds
+//        int dw = (int) (imageView.getDrawable().getBounds().width()/density);
+//        int dh = (int) (imageView.getDrawable().getBounds().height()/density);
+//        // getIntrinsic
+//        int inDw = (int) (imageView.getDrawable().getIntrinsicWidth()/density); //dp
+//        int inDh = (int) (imageView.getDrawable().getIntrinsicHeight()/density); //dp
+
+
+        decodeBitmapTask = new DecodeBitmapTask(getResources(), smallResId, w, h, this);
         decodeBitmapTask.execute();
     }
 

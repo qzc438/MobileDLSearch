@@ -273,7 +273,7 @@
             android:background="@drawable/circle_yellow" />
 
         <TextSwitcher
-            android:id="@+id/ts_place"
+            android:id="@+id/ts_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -294,9 +294,10 @@
             android:background="@drawable/circle_green" />
 
         <TextSwitcher
-            android:id="@+id/ts_description"
+            android:id="@+id/ts_model"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/left_offset"
             android:layout_marginEnd="10dp" />
 
@@ -315,7 +316,7 @@
 
 
         <TextSwitcher
-            android:id="@+id/ts_clock"
+            android:id="@+id/ts_layer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
