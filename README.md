@@ -1,6 +1,7 @@
 # MobileDLSearch
 Mobile DL Search
 ## UI Reference
+### Awesome Android UI: https://github.com/wasabeef/awesome-android-ui
 ### Sliding navigation: https://github.com/yarolegovich/SlidingRootNav
 ### Expanding view: https://github.com/diegodobelo/AndroidExpandingViewLibrary
 ### Spinner: https://github.com/GunaseelanArumaikkannu/MultiSpinner
