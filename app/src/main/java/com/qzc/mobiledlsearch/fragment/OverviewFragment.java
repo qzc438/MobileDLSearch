@@ -154,7 +154,7 @@ public class OverviewFragment extends Fragment {
         btnLayerDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment selectedScreen = DetailLayerFragment.createFor("Detail", "Model");
+                Fragment selectedScreen = DetailLayerFragment.createFor("Detail", "Layer");
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.replace(R.id.container, selectedScreen);
