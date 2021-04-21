@@ -20,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
@@ -52,6 +54,7 @@ public class OverviewFragment extends Fragment {
     private TextSwitcher modelSwitcher;
     private TextSwitcher layerSwitcher;
 
+    private ImageView btn_back;
 
     private TextView application1TextView;
     private TextView application2TextView;
@@ -91,6 +94,15 @@ public class OverviewFragment extends Fragment {
         fragmentText = (TextView) view.findViewById(R.id.fragment_text);
         fragmentText.setText(text);
 
+        btn_back = view.findViewById(R.id.btn_back);
+        // back function
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         application1TextView = (TextView) view.findViewById(R.id.tv_application_1);
         application2TextView = (TextView) view.findViewById(R.id.tv_application_2);
@@ -113,7 +125,13 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment selectedScreen = DetailDataFragment.createFor("Detail", "Data");
-                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.container, selectedScreen);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+//                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
             }
         });
 
@@ -122,7 +140,13 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment selectedScreen = DetailModelFragment.createFor("Detail", "Model");
-                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.container, selectedScreen);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+//                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
             }
         });
 
@@ -131,7 +155,13 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment selectedScreen = DetailLayerFragment.createFor("Detail", "Model");
-                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.container, selectedScreen);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+//                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
             }
         });
 
@@ -329,9 +359,16 @@ public class OverviewFragment extends Fragment {
                 final View sharedView = cardView.getChildAt(cardView.getChildCount() - 1);
                 final ActivityOptions options = ActivityOptions
                         .makeSceneTransitionAnimation(OverviewFragment.this.getActivity(), sharedView, "shared");
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, fragment)
-                        .commit();
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.container, fragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+
+//                getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
             } else if (clickedPosition > activeCardPosition) {
                 recyclerView.smoothScrollToPosition(clickedPosition);
                 onActiveCardChange(clickedPosition);

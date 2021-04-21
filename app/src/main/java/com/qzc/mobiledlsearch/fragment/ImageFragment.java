@@ -45,7 +45,8 @@ public class ImageFragment extends Fragment implements DecodeBitmapTask.Listener
             @Override
             public void onClick(View view) {
 //                ImageFragment.this.getActivity().onBackPressed();
-                getFragmentManager().beginTransaction().replace(R.id.container, new OverviewFragment()).commit();
+//                getFragmentManager().beginTransaction().replace(R.id.container, new OverviewFragment()).commit();
+                getFragmentManager().popBackStack();
             }
         });
 

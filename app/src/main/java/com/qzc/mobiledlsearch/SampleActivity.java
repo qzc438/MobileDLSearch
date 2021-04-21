@@ -99,7 +99,7 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
             showFragment(selectedScreen);
         }
         if (position == POS_DETAIL) {
-            Fragment selectedScreen = DetailLayerFragment.createFor(screenTitles[position], "Layer");
+            Fragment selectedScreen = DetailModelFragment.createFor(screenTitles[position], "Model");
             showFragment(selectedScreen);
         }
     }

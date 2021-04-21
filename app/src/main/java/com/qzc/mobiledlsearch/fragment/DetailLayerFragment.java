@@ -22,6 +22,7 @@ public class DetailLayerFragment extends Fragment {
     private static final String EXTRA_DETAIL = "detail";
     private TextView fragmentText;
     private TextView fragmentDetail;
+    private ImageView btn_back;
     private ExpandingList mExpandingList;
 
     public static DetailLayerFragment createFor(String text, String detail) {
@@ -48,6 +49,16 @@ public class DetailLayerFragment extends Fragment {
         String detail = args != null ? args.getString(EXTRA_DETAIL) : "";
         fragmentDetail = view.findViewById(R.id.fragment_detail);
         fragmentDetail.setText(detail);
+
+        btn_back = view.findViewById(R.id.btn_back);
+        // back function
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+
         mExpandingList = view.findViewById(R.id.expanding_list_main);
         createItems();
     }

@@ -9,10 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 import com.guna.libmultispinner.MultiSelectionSpinner;
+import com.ornach.nobobutton.NoboButton;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.utils.ToastUtil;
 
@@ -24,6 +27,7 @@ public class SearchFragment extends Fragment {
 
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
+    private NoboButton btnSearch;
     private ExpandingList mExpandingList;
 
     public static SearchFragment createFor(String text) {
@@ -46,6 +50,22 @@ public class SearchFragment extends Fragment {
         String text = args != null ? args.getString(EXTRA_TEXT) : "";
         fragmentText = view.findViewById(R.id.fragment_text);
         fragmentText.setText(text);
+
+        btnSearch = view.findViewById(R.id.btn_search);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment selectedScreen = OverviewFragment.createFor("Overview");
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.container, selectedScreen);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+//                OverviewFragment.this.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedScreen).commit();
+            }
+        });
+
         mExpandingList = view.findViewById(R.id.expanding_list_main);
         createItems();
     }
