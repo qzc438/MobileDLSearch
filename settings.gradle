@@ -1,3 +1,4 @@
+include ':SPARQL-ANDROID-MODULE'
 include ':libmultispinner'
 include ':app'
 rootProject.name = "MobileDLSearch"
