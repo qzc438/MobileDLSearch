@@ -1,5 +1,7 @@
 # MobileDLSearch
 Mobile DL Search
+## Server Reference
+https://github.com/BorderCloud/SPARQL-ANDROID
 ## UI Reference
 ### Awesome Android UI: https://github.com/wasabeef/awesome-android-ui
 ### Sliding navigation: https://github.com/yarolegovich/SlidingRootNav
