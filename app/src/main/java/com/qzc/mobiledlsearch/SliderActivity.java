@@ -99,17 +99,17 @@ public class SliderActivity extends AppCompatActivity {
     }
 
     private void initSwitchers() {
-        temperatureSwitcher = (TextSwitcher) findViewById(R.id.ts_domain);
-        temperatureSwitcher.setFactory(new TextViewFactory(R.style.DomainTextView, true));
-        temperatureSwitcher.setCurrentText(temperatures[0]);
+//        temperatureSwitcher = (TextSwitcher) findViewById(R.id.ts_domain);
+//        temperatureSwitcher.setFactory(new TextViewFactory(R.style.DomainTextView, true));
+//        temperatureSwitcher.setCurrentText(temperatures[0]);
 
         placeSwitcher = (TextSwitcher) findViewById(R.id.ts_data);
         placeSwitcher.setFactory(new TextViewFactory(R.style.DataTextView, false));
         placeSwitcher.setCurrentText(places[0]);
 
-        clockSwitcher = (TextSwitcher) findViewById(R.id.ts_layer);
-        clockSwitcher.setFactory(new TextViewFactory(R.style.LayerTextView, false));
-        clockSwitcher.setCurrentText(times[0]);
+//        clockSwitcher = (TextSwitcher) findViewById(R.id.ts_layer);
+//        clockSwitcher.setFactory(new TextViewFactory(R.style.LayerTextView, false));
+//        clockSwitcher.setCurrentText(times[0]);
 
         descriptionsSwitcher = (TextSwitcher) findViewById(R.id.ts_model);
         descriptionsSwitcher.setInAnimation(this, android.R.anim.fade_in);

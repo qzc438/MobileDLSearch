@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qzc.mobiledlsearch.fragment.DetailDataFragment;
 import com.qzc.mobiledlsearch.fragment.DetailLayerFragment;
 import com.qzc.mobiledlsearch.fragment.DetailModelFragment;
+import com.qzc.mobiledlsearch.fragment.HomeFragment;
 import com.qzc.mobiledlsearch.fragment.OverviewFragment;
 import com.qzc.mobiledlsearch.fragment.SearchFragment;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
@@ -34,11 +35,12 @@ import java.util.Arrays;
 
 public class SampleActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
 
-    private static final int POS_FILTER = 0;
-    private static final int POS_OVERVIEW = 1;
-    private static final int POS_DETAIL = 2;
-    private static final int POS_TEST = 3;
-    private static final int POS_LOGOUT = 5;
+    private static final int POS_HOME = 0;
+    private static final int POS_FILTER = 1;
+    private static final int POS_OVERVIEW = 2;
+    private static final int POS_DETAIL = 3;
+    private static final int POS_TEST = 4;
+    private static final int POS_LOGOUT = 6;
 
     private String[] screenTitles;
     private Drawable[] screenIcons;
@@ -66,7 +68,8 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
         screenTitles = loadScreenTitles();
 
         DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
-                createItemFor(POS_FILTER).setChecked(true),
+                createItemFor(POS_HOME).setChecked(true),
+                createItemFor(POS_FILTER),
                 createItemFor(POS_OVERVIEW),
                 createItemFor(POS_DETAIL),
                 createItemFor(POS_TEST),
@@ -79,7 +82,7 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
 
-        adapter.setSelected(POS_FILTER);
+        adapter.setSelected(POS_HOME);
     }
 
     @Override
@@ -90,6 +93,10 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
         slidingRootNav.closeMenu();
 //        Fragment selectedScreen = CenteredTextFragment.createFor(screenTitles[position]);
 //        showFragment(selectedScreen);
+        if (position == POS_HOME) {
+            Fragment selectedScreen = HomeFragment.createFor(screenTitles[position]);
+            showFragment(selectedScreen);
+        }
         if (position == POS_FILTER) {
             Fragment selectedScreen = SearchFragment.createFor(screenTitles[position]);
             showFragment(selectedScreen);

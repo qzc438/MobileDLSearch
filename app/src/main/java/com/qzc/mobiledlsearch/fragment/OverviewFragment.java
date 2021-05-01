@@ -3,13 +3,14 @@ package com.qzc.mobiledlsearch.fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ActivityOptions;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
@@ -25,12 +26,23 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
+import com.google.gson.Gson;
 import com.ornach.nobobutton.NoboButton;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.cards.SliderAdapter;
 
+import com.qzc.mobiledlsearch.entity.ParameterBean;
+import com.qzc.mobiledlsearch.utils.OntologyAPI;
+import com.qzc.mobiledlsearch.utils.ToastUtil;
 import com.ramotion.cardslider.CardSliderLayoutManager;
 import com.ramotion.cardslider.CardSnapHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class OverviewFragment extends Fragment {
@@ -39,20 +51,33 @@ public class OverviewFragment extends Fragment {
     private TextView fragmentText;
 
     private final int[] pics = {R.drawable.lstm, R.drawable.lstm_stacked, R.drawable.lstm_attantion, R.drawable.lstm, R.drawable.lstm_stacked};
-    private final String[] domains = {"Healthcare", "Healthcare", "Healthcare", "Healthcare", "Healthcare"};
-    private final String[] applications = {"Living Activity Recognition", "Working Activity Recognition", "Health Activity Recognition", "Living Activity Recognition", "Working Activity Recognition"};
-    private final String[] datas = {"HAR Dataset 1", "HAR Dataset 2", "HAR Dataset 3", "HAR Dataset 4", "HAR Dataset 5"};
-    private final String[] models = {"CNN", "RNN", "CNN", "RNN", "CNN"};
-    private final String[] layers = {"Convolution Layer", "LSTM Layer", "Convolution Layer", "LSTM Layer", "Convolution Layer"};
 
-    private final SliderAdapter sliderAdapter = new SliderAdapter(pics, 5, new OnCardClickListener());
+    public static String[] applicationNames = SearchFragment.applicationNameList.toArray(new String[SearchFragment.applicationNameList.size()]);;
+    public static String[] datas = SearchFragment.dataList.toArray(new String[SearchFragment.dataList.size()]);
+    public static String[] dataNames = SearchFragment.dataNameList.toArray(new String[SearchFragment.dataNameList.size()]);
+    public static String[] models = SearchFragment.modelList.toArray(new String[SearchFragment.modelList.size()]);
+    public static String[] modelNames = SearchFragment.modelNameList.toArray(new String[SearchFragment.modelNameList.size()]);
+    public static String[] accuracies = SearchFragment.accuracyList.toArray(new String[SearchFragment.accuracyList.size()]);
+    public static String[] precisions = SearchFragment.precisionList.toArray(new String[SearchFragment.precisionList.size()]);
+    public static String[] recalls = SearchFragment.recallList.toArray(new String[SearchFragment.recallList.size()]);
+    public static String[] f1scores = SearchFragment.f1scoreList.toArray(new String[SearchFragment.f1scoreList.size()]);
+
+//    private final String[] domains = {"Healthcare", "Healthcare", "Healthcare", "Healthcare", "Healthcare"};
+//    public static String[] applications = {"Living Activity Recognition", "Working Activity Recognition", "Health Activity Recognition", "Living Activity Recognition", "Working Activity Recognition"};
+//    public static String[] datas = {"HAR Dataset 1", "HAR Dataset 2", "HAR Dataset 3", "HAR Dataset 4", "HAR Dataset 5"};
+//    public static String[] models = {"CNN", "RNN", "CNN", "RNN", "CNN"};
+//    private final String[] layers = {"Convolution Layer", "LSTM Layer", "Convolution Layer", "LSTM Layer", "Convolution Layer"};
+
+    private final SliderAdapter sliderAdapter = new SliderAdapter(pics, applicationNames.length, new OnCardClickListener());
 
     private CardSliderLayoutManager layoutManger;
     private RecyclerView recyclerView;
-    private TextSwitcher domainSwitcher;
+
     private TextSwitcher dataSwitcher;
     private TextSwitcher modelSwitcher;
-    private TextSwitcher layerSwitcher;
+
+//    private TextSwitcher domainSwitcher;
+//    private TextSwitcher layerSwitcher;
 
     private ImageView btn_back;
 
@@ -72,12 +97,18 @@ public class OverviewFragment extends Fragment {
     private NoboButton btnModelDetail;
     private NoboButton btnLayerDetail;
 
+
     public static OverviewFragment createFor(String text) {
         OverviewFragment fragment = new OverviewFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Nullable
@@ -89,11 +120,13 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+        // show location
         Bundle args = getArguments();
         String text = args != null ? args.getString(EXTRA_TEXT) : "";
         fragmentText = (TextView) view.findViewById(R.id.fragment_text);
         fragmentText.setText(text);
 
+        // show backwards
         btn_back = view.findViewById(R.id.btn_back);
         // back function
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -106,20 +139,18 @@ public class OverviewFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         application1TextView = (TextView) view.findViewById(R.id.tv_application_1);
         application2TextView = (TextView) view.findViewById(R.id.tv_application_2);
-        domainSwitcher = (TextSwitcher) view.findViewById(R.id.ts_domain);
+
         dataSwitcher = (TextSwitcher) view.findViewById(R.id.ts_data);
         modelSwitcher = (TextSwitcher) view.findViewById(R.id.ts_model);
-        layerSwitcher = (TextSwitcher) view.findViewById(R.id.ts_layer);
+//        domainSwitcher = (TextSwitcher) view.findViewById(R.id.ts_domain);
+//        layerSwitcher = (TextSwitcher) view.findViewById(R.id.ts_layer);
 
         progressAccuracy = (CircleProgressBar)view.findViewById(R.id.progress_accuracy);
-        progressAccuracy.setProgress(0);
         progressPrecision = (CircleProgressBar)view.findViewById(R.id.progress_precision);
-        progressPrecision.setProgress(25);
         progressRecall = (CircleProgressBar)view.findViewById(R.id.progress_recall);
-        progressRecall.setProgress(50);
         progressF1Score = (CircleProgressBar)view.findViewById(R.id.progress_f1score);
-        progressF1Score.setProgress(75);
 
+        // go to data detail
         btnDataDetail = (NoboButton)view.findViewById(R.id.btn_view_data_detail);
         btnDataDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +166,7 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+        // go to model detail
         btnModelDetail = (NoboButton)view.findViewById(R.id.btn_view_model_detail);
         btnModelDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +182,7 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+        // go to model detail
         btnLayerDetail = (NoboButton)view.findViewById(R.id.btn_view_layer_detail);
         btnLayerDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,18 +220,22 @@ public class OverviewFragment extends Fragment {
 
     private void initSwitchers() {
 
-        domainSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DomainTextView, true));
-        domainSwitcher.setCurrentText(domains[0]);
-
         dataSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DataTextView, false));
-        dataSwitcher.setCurrentText(datas[0]);
+        dataSwitcher.setCurrentText(dataNames[0]);
 
         modelSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.ModelTextView, false));
-        modelSwitcher.setCurrentText(models[0]);
+        modelSwitcher.setCurrentText(modelNames[0]);
 
-        layerSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.LayerTextView, false));
-        layerSwitcher.setCurrentText(layers[0]);
+        progressAccuracy.setProgress(Math.round(Float.parseFloat(accuracies[0])*100));
+        progressPrecision.setProgress(Math.round(Float.parseFloat(precisions[0])*100));
+        progressRecall.setProgress(Math.round(Float.parseFloat(recalls[0])*100));
+        progressF1Score.setProgress(Math.round(Float.parseFloat(f1scores[0])*100));
 
+//        domainSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DomainTextView, true));
+//        domainSwitcher.setCurrentText(domains[0]);
+
+//        layerSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.LayerTextView, false));
+//        layerSwitcher.setCurrentText(layers[0]);
 
     }
 
@@ -210,12 +247,12 @@ public class OverviewFragment extends Fragment {
 
         application1TextView.setX(applicationOffset1);
         application2TextView.setX(applicationOffset2);
-        application1TextView.setText(applications[0]);
+        application1TextView.setText(applicationNames[0]);
         application2TextView.setAlpha(0f);
 
     }
 
-    private void setCountryText(String text, boolean left2right) {
+    private void setApplicationText(String text, boolean left2right) {
         final TextView invisibleText;
         final TextView visibleText;
         if (application1TextView.getAlpha() > application2TextView.getAlpha()) {
@@ -253,7 +290,6 @@ public class OverviewFragment extends Fragment {
         if (pos == RecyclerView.NO_POSITION || pos == currentPosition) {
             return;
         }
-
         onActiveCardChange(pos);
     }
 
@@ -270,28 +306,34 @@ public class OverviewFragment extends Fragment {
             animV[1] = R.anim.slide_out_top;
         }
 
-        setCountryText(applications[pos % applications.length], left2right);
-
-        domainSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animH[0]);
-        domainSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animH[1]);
-        domainSwitcher.setText(domains[pos % domains.length]);
+        setApplicationText(applicationNames[pos % applicationNames.length], left2right);
 
         dataSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
         dataSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        dataSwitcher.setText(datas[pos % datas.length]);
+        dataSwitcher.setText(dataNames[pos % dataNames.length]);
+
+        progressAccuracy.setProgress(Math.round(Float.parseFloat(accuracies[pos])*100));
+        progressPrecision.setProgress(Math.round(Float.parseFloat(precisions[pos])*100));
+        progressRecall.setProgress(Math.round(Float.parseFloat(recalls[pos])*100));
+        progressF1Score.setProgress(Math.round(Float.parseFloat(f1scores[pos])*100));
+        ToastUtil.showText(OverviewFragment.this.getActivity(), "position: "+pos);
 
         modelSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
         modelSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        modelSwitcher.setText(models[pos % models.length]);
+        modelSwitcher.setText(modelNames[pos % modelNames.length]);
 
-        layerSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
-        layerSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        layerSwitcher.setText(layers[pos % layers.length]);
+//        domainSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animH[0]);
+//        domainSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animH[1]);
+//        domainSwitcher.setText(domains[pos % domains.length]);
+
+//        layerSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
+//        layerSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
+//        layerSwitcher.setText(layers[pos % layers.length]);
 
         currentPosition = pos;
     }
 
-    private class TextViewFactory implements  ViewSwitcher.ViewFactory {
+    private class TextViewFactory implements ViewSwitcher.ViewFactory {
 
         @StyleRes
         final int styleId;

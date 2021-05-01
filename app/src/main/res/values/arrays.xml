@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="ld_activityScreenTitles">
+        <item>Home</item>
         <item>Filter</item>
         <item>Overview</item>
         <item>Detail</item>
@@ -11,6 +12,7 @@
     </string-array>
 
     <array name="ld_activityScreenIcons">
+        <item>@drawable/outline_home_black_24</item>
         <item>@drawable/outline_filter_alt_black_24</item>
         <item>@drawable/outline_list_alt_black_24</item>
         <item>@drawable/outline_summarize_black_24</item>

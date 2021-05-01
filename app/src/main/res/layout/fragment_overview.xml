@@ -63,8 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/frameLayout">
+            android:layout_centerVertical="true">
 
             <View
                 android:layout_width="40dp"
@@ -96,21 +95,21 @@
 
         </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/domain_background">
+<!--        <FrameLayout-->
+<!--            android:id="@+id/frameLayout"-->
+<!--            android:layout_width="110dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:background="@drawable/domain_background">-->
 
-            <TextSwitcher
-                android:id="@+id/ts_domain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+<!--            <TextSwitcher-->
+<!--                android:id="@+id/ts_domain"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center" />-->
 
-        </FrameLayout>
+<!--        </FrameLayout>-->
 
     </RelativeLayout>
 
@@ -380,19 +379,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="-6dp"
-            android:background="@drawable/circle_blue" />
+<!--        <View-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="-6dp"-->
+<!--            android:background="@drawable/circle_blue" />-->
 
 
-        <TextSwitcher
-            android:id="@+id/ts_layer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/left_offset" />
+<!--        <TextSwitcher-->
+<!--            android:id="@+id/ts_layer"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:layout_marginStart="@dimen/left_offset" />-->
 
         <com.ornach.nobobutton.NoboButton
             android:id="@+id/btn_view_layer_detail"
