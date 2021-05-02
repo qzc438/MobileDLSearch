@@ -14,9 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.qzc.mobiledlsearch.fragment.DetailDataFragment;
-import com.qzc.mobiledlsearch.fragment.DetailLayerFragment;
-import com.qzc.mobiledlsearch.fragment.DetailModelFragment;
+import com.qzc.mobiledlsearch.fragment.DetailFragment;
 import com.qzc.mobiledlsearch.fragment.HomeFragment;
 import com.qzc.mobiledlsearch.fragment.OverviewFragment;
 import com.qzc.mobiledlsearch.fragment.SearchFragment;
@@ -106,7 +104,7 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
             showFragment(selectedScreen);
         }
         if (position == POS_DETAIL) {
-            Fragment selectedScreen = DetailModelFragment.createFor(screenTitles[position], "Model");
+            Fragment selectedScreen = DetailFragment.createFor(screenTitles[position], "Model");
             showFragment(selectedScreen);
         }
     }

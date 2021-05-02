@@ -14,19 +14,24 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 import com.qzc.mobiledlsearch.R;
+import com.qzc.mobiledlsearch.utils.ToastUtil;
 
 
-public class DetailLayerFragment extends Fragment {
+public class DetailFragment extends Fragment {
 
     private static final String EXTRA_TEXT = "text";
     private static final String EXTRA_DETAIL = "detail";
+    private static final String DATA_ID = "data_id";
     private TextView fragmentText;
     private TextView fragmentDetail;
     private ImageView btn_back;
     private ExpandingList mExpandingList;
 
-    public static DetailLayerFragment createFor(String text, String detail) {
-        DetailLayerFragment fragment = new DetailLayerFragment();
+    private String[] detailDatas = OverviewFragment.detailDataList.toArray(new String[OverviewFragment.detailDataList.size()]);
+    private String[] detailModels = OverviewFragment.detailModelList.toArray(new String[OverviewFragment.detailModelList.size()]);
+
+    public static DetailFragment createFor(String text, String detail) {
+        DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);
         args.putString(EXTRA_DETAIL, detail);
@@ -49,6 +54,8 @@ public class DetailLayerFragment extends Fragment {
         String detail = args != null ? args.getString(EXTRA_DETAIL) : "";
         fragmentDetail = view.findViewById(R.id.fragment_detail);
         fragmentDetail.setText(detail);
+        String data_id = args != null ? args.getString(DATA_ID) : "";
+        ToastUtil.showText(DetailFragment.this.getActivity(),data_id);
 
         btn_back = view.findViewById(R.id.btn_back);
         // back function
@@ -64,10 +71,16 @@ public class DetailLayerFragment extends Fragment {
     }
 
     private void createItems() {
-        addItem("Convolution Layer", new String[]{"Name: conv1", "Rank: 1", "Input Channel: 9", "Output Channel: 64", "Kernel Size: 3"}, R.color.pink);
-        addItem("Convolution Layer", new String[]{"Name: conv2", "Rank: 1", "Input Channel: 64", "Output Channel: 64", "Kernel Size: 3"}, R.color.yellow);
-        addItem("Dropout Layer", new String[]{"Name: dropout", "Rate: 0.5"}, R.color.green);
-        addItem("Pooling Layer", new String[]{"Name: maxpooling", "Rank: 1", "Type: maxpooling", "Kernel Size: 3"}, R.color.blue);
+        addItem("Data", detailDatas, R.color.yellow);
+        addItem("Model", detailModels, R.color.green);
+        addItem("Layer", new String[]{"Activity Type: Living Activity", "Activity Location: Single", "Activity Feature: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING"}, R.color.blue);
+//        addItem("Model", new String[]{"Model Name: Vanila CNN", "Model Type: CNN", "Numnber of Layers: 7"}, R.color.pink);
+//        addItem("Train", new String[]{"Backend: Pytorch", "Loss Function: Categorical Crossentropy", "Optimiser: Adam"}, R.color.yellow);
+//        addItem("Performance", new String[]{"Accuracy: 93%", "Precision: 83%", "Recall: 73%", "F1 Score: 63%",}, R.color.green);
+//        addItem("Convolution Layer", new String[]{"Name: conv1", "Rank: 1", "Input Channel: 9", "Output Channel: 64", "Kernel Size: 3"}, R.color.pink);
+//        addItem("Convolution Layer", new String[]{"Name: conv2", "Rank: 1", "Input Channel: 64", "Output Channel: 64", "Kernel Size: 3"}, R.color.yellow);
+//        addItem("Dropout Layer", new String[]{"Name: dropout", "Rate: 0.5"}, R.color.green);
+//        addItem("Pooling Layer", new String[]{"Name: maxpooling", "Rank: 1", "Type: maxpooling", "Kernel Size: 3"}, R.color.blue);
     }
 
     private void addItem(String title, String[] subItems, int colorRes) {
@@ -115,7 +128,7 @@ public class DetailLayerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // set dialog here
-                new MaterialDialog.Builder(DetailLayerFragment.this.getActivity())
+                new MaterialDialog.Builder(DetailFragment.this.getActivity())
 //                        .title("title")
                         .content(tv.getText())
                         .positiveText(R.string.ok)
@@ -124,7 +137,6 @@ public class DetailLayerFragment extends Fragment {
                         .show();
             }
         });
-//        TextJustification.justify(tv, 80);
     }
 
     interface OnItemCreated {

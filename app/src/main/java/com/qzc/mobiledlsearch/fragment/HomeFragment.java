@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
         // find application area
         new AsyncApplicationArea().execute();
         // find data sensor type
-        new AsyncDataSensorType().execute();
+        new AsyncDataSourceType().execute();
         // find model type
         new AsyncModelType().execute();
         // find layer type
@@ -134,11 +134,11 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    // async data sensor type
-    private class AsyncDataSensorType extends AsyncTask<String, Void, String> {
+    // async data source type
+    private class AsyncDataSourceType extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-            String result = OntologyAPI.getDataSensorType();
+            String result = OntologyAPI.getDataSourceType();
             return result;
         }
         @Override

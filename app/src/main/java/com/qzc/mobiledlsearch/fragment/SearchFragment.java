@@ -49,6 +49,7 @@ public class SearchFragment extends Fragment {
     public static List<String> precisionList;
     public static List<String> recallList;
     public static List<String> f1scoreList;
+    public static List<String> numberOfLayersList;
 
     private MultiSelectionSpinner multiSelectionListSpinner;
 
@@ -68,32 +69,37 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        //show location
         Bundle args = getArguments();
         String text = args != null ? args.getString(EXTRA_TEXT) : "";
         fragmentText = view.findViewById(R.id.fragment_text);
         fragmentText.setText(text);
 
+        // search function
         btnSearch = view.findViewById(R.id.btn_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Fragment selectedScreen = OverviewFragment.createFor("Overview");
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.container, selectedScreen);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.addToBackStack(null);
-                ft.commit();
-
+                if(applicationNameList==null){
+                    ToastUtil.showText(SearchFragment.this.getActivity(), "No results available. Please change your filters");
+                } else{
+                    Fragment selectedScreen = OverviewFragment.createFor("Overview");
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    ft.replace(R.id.container, selectedScreen);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
 
+        // show title and sub-title
         mExpandingList = view.findViewById(R.id.expanding_list_main);
         createItems();
     }
-
-
 
     private void createItems() {
         addItem("Application", new String[]{"Domain", "Area"}, R.color.pink);
@@ -145,14 +151,13 @@ public class SearchFragment extends Fragment {
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.applicationDomainList);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
+                    // multiSelectionListSpinner.setSelection(new int[]{0, 1});
                     // myList.add("Healthcare");
                 }else if (subTitle.equals("Area")){
                     List<String> myList = new ArrayList<>();
                     if (HomeFragment.applicationAreaList !=null){
                         myList.addAll(HomeFragment.applicationAreaList);
                         multiSelectionListSpinner.setItems(myList);
-                        multiSelectionListSpinner.setSelection(new int[]{0});
                     }
                     // myList.add("Daily Life Monitoring");
                     // myList.add("Personal Biometric Signature");
@@ -163,20 +168,18 @@ public class SearchFragment extends Fragment {
                     myList.add("Multiple Subject");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{1});
                 }else if (subTitle.equals("Sensor Type")){
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.dataSensorTypeList);
-//                    myList.add("Accelerometer");
-//                    myList.add("Gyroscope");
-//                    myList.add("Magnetometer");
-//                    myList.add("Pressure Sensor");
-//                    myList.add("Temperature Sensor");
-//                    myList.add("Humidity Sensor");
-//                    myList.add("Camera");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0, 1});
+                    // myList.add("Accelerometer");
+                    // myList.add("Gyroscope");
+                    // myList.add("Magnetometer");
+                    // myList.add("Pressure Sensor");
+                    // myList.add("Temperature Sensor");
+                    // myList.add("Humidity Sensor");
+                    // myList.add("Camera");
                 }else if (subTitle.equals("Sensor Base")){
                     List<String> myList = new ArrayList<>();
                     myList.add("Arm");
@@ -185,7 +188,6 @@ public class SearchFragment extends Fragment {
                     myList.add("Waist");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{2});
                 }else if (subTitle.equals("Activity Type")){
                     List<String> myList = new ArrayList<>();
                     myList.add("Living Activity");
@@ -193,14 +195,12 @@ public class SearchFragment extends Fragment {
                     myList.add("Health Activity");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{2});
                 }else if (subTitle.equals("Location")){
                     List<String> myList = new ArrayList<>();
                     myList.add("Single Location");
                     myList.add("Multiple Location");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
                 }else if (subTitle.equals("Backend")){
                     List<String> myList = new ArrayList<>();
                     myList.add("TensorFlow");
@@ -208,29 +208,25 @@ public class SearchFragment extends Fragment {
                     myList.add("Pytorch");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{2});
                 }else if (subTitle.equals("Model Type")){
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.modelTypeList);
-//                    myList.add("CNN");
-//                    myList.add("RNN");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
+                    // myList.add("CNN");
+                    // myList.add("RNN");
                 }else if (subTitle.equals("Loss Function")) {
                     List<String> myList = new ArrayList<>();
                     myList.add("Binary Crossentropy");
                     myList.add("Categorical Crossentropy");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{1});
                 }else if (subTitle.equals("Optimiser")) {
                     List<String> myList = new ArrayList<>();
                     myList.add("Adam");
                     myList.add("SGD");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
                 }else if (subTitle.equals("Performance")) {
                     List<String> myList = new ArrayList<>();
                     myList.add("Loss");
@@ -240,40 +236,35 @@ public class SearchFragment extends Fragment {
                     myList.add("F1 Score");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{1});
                 }else if (subTitle.equals("Layer Type")) {
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.layerTypeList);
-//                    myList.add("Core Layer");
-//                    myList.add("Functional Layer");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
+                    // myList.add("Core Layer");
+                    // myList.add("Functional Layer");
                 } else if (subTitle.equals("Core")) {
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.coreLayerTypeList);
-//                    myList.add("Convolution Layer");
-//                    myList.add("Recurrent Layer");
-//                    myList.add("Dense Layer");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
+                    // myList.add("Convolution Layer");
+                    // myList.add("Recurrent Layer");
+                    // myList.add("Dense Layer");
                 } else if (subTitle.equals("Functional")) {
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.functionalLayerTypeList);
-//                    myList.add("Reshaping Layer");
-//                    myList.add("Pooling Layer");
-//                    myList.add("Dropout Layer");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
+                    // myList.add("Reshaping Layer");
+                    // myList.add("Pooling Layer");
+                    // myList.add("Dropout Layer");
                 } else if (subTitle.equals("Activation")) {
                     List<String> myList = new ArrayList<>();
                     myList.add("ReLU");
                     myList.add("Softmax");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
                 } else if (subTitle.equals("Argument")) {
                     List<String> myList = new ArrayList<>();
                     myList.add("Initialiser");
@@ -281,17 +272,16 @@ public class SearchFragment extends Fragment {
                     myList.add("Regulariser");
                     multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{1});
                 } else {
                     List<String> myList = new ArrayList<>();
                     myList.add("No options available");
                     multiSelectionListSpinner.setTitle("Unknown");
                     multiSelectionListSpinner.setItems(myList);
-                    multiSelectionListSpinner.setSelection(new int[]{0});
                 }
 
-
+        // set listener to invoke search when filter changes
         multiSelectionListSpinner.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
+
             @Override
             public void selectedIndices(List<Integer> indices, MultiSelectionSpinner spinner) {
             }
@@ -311,12 +301,18 @@ public class SearchFragment extends Fragment {
                 if(title.equals("Application") && subTitle.equals("Area")){
                     parameterBean.setApplicationArea(strings);
                 }
+                if(title.equals("Data") && subTitle.equals("Sensor Type")){
+                    parameterBean.setDataSourceType(strings);
+                }
+                if(title.equals("Model") && subTitle.equals("Model Type")){
+                    parameterBean.setModelType(strings);
+                }
 
                 Gson gson = new Gson();
                 String jsonParameterBean = gson.toJson(parameterBean);
                 new SearchFragment.AsyncOverviewInformation().execute(jsonParameterBean);
 
-                ToastUtil.showText(SearchFragment.this.getActivity(), "Title: " + title +", SubTitle: " + subTitle + ", List : " + strings.toString());
+                // ToastUtil.showText(SearchFragment.this.getActivity(), parameterBean.getApplicationArea().toString());
             }
         });
     }
@@ -343,6 +339,7 @@ public class SearchFragment extends Fragment {
                 precisionList = new ArrayList<String>();
                 recallList = new ArrayList<String>();
                 f1scoreList = new ArrayList<String>();
+                numberOfLayersList = new ArrayList<String>();
 
                 json = new JSONObject(result);
                 JSONArray jsonArray = json.getJSONObject("results").getJSONArray("bindings");
@@ -383,6 +380,10 @@ public class SearchFragment extends Fragment {
                     if (jsonObject.has("performanceF1Score")) {
                         String a = jsonObject.getJSONObject("performanceF1Score").getString("value");
                         f1scoreList.add(a);
+                    }
+                    if (jsonObject.has("numberOfLayers")) {
+                        String a = jsonObject.getJSONObject("numberOfLayers").getString("value");
+                        numberOfLayersList.add(a);
                     }
                 }
             } catch (JSONException e) {

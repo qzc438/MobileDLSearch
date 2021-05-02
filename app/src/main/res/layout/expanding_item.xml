@@ -34,8 +34,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         app:srcCompat="@drawable/outline_add_circle_outline_black_36"
         app:tint="@color/white" />
 

@@ -292,7 +292,7 @@
 
         <TextSwitcher
             android:id="@+id/ts_data"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/left_offset"
             android:textColor="@color/white" />
@@ -339,7 +339,7 @@
 
         <TextSwitcher
             android:id="@+id/ts_model"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/left_offset"
@@ -379,19 +379,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-<!--        <View-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_marginTop="-6dp"-->
-<!--            android:background="@drawable/circle_blue" />-->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-6dp"
+            android:background="@drawable/circle_blue" />
 
-
-<!--        <TextSwitcher-->
-<!--            android:id="@+id/ts_layer"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:layout_marginStart="@dimen/left_offset" />-->
+        <TextSwitcher
+            android:id="@+id/ts_layer"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/left_offset" />
 
         <com.ornach.nobobutton.NoboButton
             android:id="@+id/btn_view_layer_detail"

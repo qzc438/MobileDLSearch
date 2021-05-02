@@ -91,9 +91,9 @@ public class OntologyAPI {
         return findTextResult(strURL);
     }
 
-    // data sensor type
-    public static String getDataSensorType() {
-        String methodURL = "/filter/getDataSensorType";
+    // data source type
+    public static String getDataSourceType() {
+        String methodURL = "/filter/getDataSourceType";
         String strURL = baseURL + methodURL;
         return findTextResult(strURL);
     }
@@ -128,9 +128,23 @@ public class OntologyAPI {
 
     // find overview information
     public static String getOverviewInformation(String jsonParameterBean){
-        String methodURL = "/filter/getOverviewInformation";
+        String methodURL = "/search/getOverviewInformation";
         String strURL = baseURL + methodURL;
         return addObject(jsonParameterBean, strURL);
+    }
+
+    // find data detail information
+    public static String getDataDetail(String dataID){
+        String methodURL = "/detail/getDataDetail/dataID="+dataID;
+        String strURL = baseURL + methodURL;
+        return findTextResult(strURL);
+    }
+
+    // find model detail information
+    public static String getModelDetail(String modelID){
+        String methodURL = "/detail/getModelDetail/modelID="+modelID;
+        String strURL = baseURL + methodURL;
+        return findTextResult(strURL);
     }
 
 }
