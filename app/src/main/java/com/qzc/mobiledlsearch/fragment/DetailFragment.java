@@ -55,7 +55,6 @@ public class DetailFragment extends Fragment {
         fragmentDetail = view.findViewById(R.id.fragment_detail);
         fragmentDetail.setText(detail);
         String data_id = args != null ? args.getString(DATA_ID) : "";
-        ToastUtil.showText(DetailFragment.this.getActivity(),data_id);
 
         btn_back = view.findViewById(R.id.btn_back);
         // back function

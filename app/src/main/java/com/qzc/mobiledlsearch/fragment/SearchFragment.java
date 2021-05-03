@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.grabner.circleprogress.CircleProgressView;
+
 
 public class SearchFragment extends Fragment {
 
@@ -50,6 +53,15 @@ public class SearchFragment extends Fragment {
     public static List<String> recallList;
     public static List<String> f1scoreList;
     public static List<String> numberOfLayersList;
+
+    private CircleProgressView circleView_accuracy;
+    private SeekBar seekBar_accuracy;
+    private CircleProgressView circleView_precision;
+    private SeekBar seekBar_precision;
+    private CircleProgressView circleView_recall;
+    private SeekBar seekBar_recall;
+    private CircleProgressView circleView_f1score;
+    private SeekBar seekBar_f1score;
 
     private MultiSelectionSpinner multiSelectionListSpinner;
 
@@ -95,6 +107,103 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
+
+        // performance metrics
+        circleView_accuracy = (CircleProgressView) view.findViewById(R.id.circleView_accuracy);
+        circleView_accuracy.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(float value) {
+                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+            }
+        });
+        seekBar_accuracy = (SeekBar) view.findViewById(R.id.seekBar_accuracy);
+        seekBar_accuracy.setMax(100);
+        seekBar_accuracy.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        circleView_accuracy.setValueAnimated(seekBar.getProgress(), 1500);
+                    }
+                }
+        );
+
+        circleView_precision = (CircleProgressView) view.findViewById(R.id.circleView_precision);
+        circleView_precision.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(float value) {
+                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+            }
+        });
+        seekBar_precision = (SeekBar) view.findViewById(R.id.seekBar_precision);
+        seekBar_precision.setMax(100);
+        seekBar_precision.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        circleView_precision.setValueAnimated(seekBar.getProgress(), 1500);
+                    }
+                }
+        );
+
+        circleView_recall = (CircleProgressView) view.findViewById(R.id.circleView_recall);
+        circleView_recall.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(float value) {
+                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+            }
+        });
+        seekBar_recall = (SeekBar) view.findViewById(R.id.seekBar_recall);
+        seekBar_recall.setMax(100);
+        seekBar_recall.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        circleView_recall.setValueAnimated(seekBar.getProgress(), 1500);
+                    }
+                }
+        );
+
+        circleView_f1score = (CircleProgressView) view.findViewById(R.id.circleView_f1score);
+        circleView_f1score.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(float value) {
+                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+            }
+        });
+        seekBar_f1score = (SeekBar) view.findViewById(R.id.seekBar_f1score);
+        seekBar_f1score.setMax(100);
+        seekBar_f1score.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        circleView_f1score.setValueAnimated(seekBar.getProgress(), 1500);
+                    }
+                }
+        );
 
         // show title and sub-title
         mExpandingList = view.findViewById(R.id.expanding_list_main);
