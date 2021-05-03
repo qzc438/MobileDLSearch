@@ -1,7 +1,9 @@
 # MobileDLSearch
 Mobile DL Search
-## Server Reference
-### https://github.com/BorderCloud/SPARQL-ANDROID
+## API Reference
+### API server: https://github.com/qzc438/OntologyAPI
+### Android downloader: https://github.com/huxq17/Pump
+### Android SPARQL: https://github.com/BorderCloud/SPARQL-ANDROID
 ## UI Reference
 ### Awesome Android UI: https://github.com/wasabeef/awesome-android-ui
 ### Sliding navigation: https://github.com/yarolegovich/SlidingRootNav
