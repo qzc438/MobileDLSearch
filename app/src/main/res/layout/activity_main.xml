@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:orientation="vertical"
+    tools:context=".DownloadActivity">
+<EditText
+    android:id="@+id/etDownload"
+    android:hint="输入下载链接"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download" />
+
+    <Button
+        android:id="@+id/add_download_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download multiple file" />
+
+    <Button
+        android:id="@+id/jump_download_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View download list" />
+    <Button
+        android:id="@+id/jump_remote_download_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View remote download list" />
+    <Button
+        android:id="@+id/jump_webview_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Webview download" />
+
+</LinearLayout>

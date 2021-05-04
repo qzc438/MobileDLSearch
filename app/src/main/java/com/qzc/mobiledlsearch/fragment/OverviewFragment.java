@@ -187,7 +187,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void initProgressDialog() {
-        progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog = new ProgressDialog(OverviewFragment.this.getActivity());
         progressDialog.setTitle("Downloading");
         progressDialog.setProgress(0);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -233,9 +233,41 @@ public class OverviewFragment extends Fragment {
         btnDataDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ToastUtil.showText(OverviewFragment.this.getActivity(),"Start downloading...");
                 Pump.newRequest(dataResources[0])
                         .forceReDownload(true)
                         .submit();
+//                Pump.newRequest(dataResources[0])
+//                        .setRequestBuilder(new Request.Builder())
+//                        .listener(new DownloadListener(OverviewFragment.this.getActivity()) {
+//
+//                            @Override
+//                            public void onProgress(int progress) {
+//                                progressDialog.setProgress(progress);
+//                            }
+//
+//                            @Override
+//                            public void onSuccess() {
+//                                progressDialog.dismiss();
+//                                Toast.makeText(OverviewFragment.this.getActivity(), "Download Finished: " + getDownloadInfo().getFilePath(), Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onFailed() {
+//                                progressDialog.dismiss();
+//                                LogUtil.e("onFailed code=" + getDownloadInfo().getErrorCode());
+//                                Toast.makeText(OverviewFragment.this.getActivity(), "Download Failed", Toast.LENGTH_SHORT).show();
+//                            }
+//                        })
+//                        //Set whether to repeatedly download the downloaded file,default false.
+//                        .forceReDownload(true)
+//                        //Set how many threads are used when downloading,default 3.
+//                        .threadNum(3)
+//                        .setId("123")
+//                        //Pump will connect server by this OKHttp request builder,so you can customize http request.
+//                        .setRequestBuilder(new Request.Builder())
+//                        .setRetry(3, 200)
+//                        .submit();
             }
         });
 
@@ -248,6 +280,7 @@ public class OverviewFragment extends Fragment {
         btnModelDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ToastUtil.showText(OverviewFragment.this.getActivity(),"Start downloading...");
                 Pump.newRequest(modelResources[0])
                         .forceReDownload(true)
                         .submit();
@@ -359,6 +392,7 @@ public class OverviewFragment extends Fragment {
         btnDataDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ToastUtil.showText(OverviewFragment.this.getActivity(),"Start downloading...");
                 Pump.newRequest(dataResources[pos])
                         .forceReDownload(true)
                         .submit();
@@ -375,6 +409,7 @@ public class OverviewFragment extends Fragment {
         btnModelDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ToastUtil.showText(OverviewFragment.this.getActivity(),"Start downloading...");
                 Pump.newRequest(modelResources[pos])
                         .forceReDownload(true)
                         .submit();

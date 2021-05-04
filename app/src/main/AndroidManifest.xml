@@ -20,8 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".DownloadActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".remote.RemoteDownloadListActivity"></activity>
+        <activity android:name=".DownloadActivity"></activity>
         <activity android:name=".DownloadListActivity"></activity>
         <activity android:name=".EditableProgressActivity"></activity>
         <activity android:name=".SensorActivity"></activity>

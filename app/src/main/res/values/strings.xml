@@ -3,7 +3,11 @@
     <string name="welcome">Welcome</string>
     <string name="username">Wilson</string>
     <string name="init">Initialise</string>
-    <string name="app_description">This project demonstrates the use of Deep Learning Ontology.</string>
+    <string name="app_description"> Use of Deep Learning Ontology</string>
+    <string name="app_description_step_one">\u2022 Step 1: Filter</string>
+    <string name="app_description_step_two">\u2022 Step 2: Overview</string>
+    <string name="app_description_step_three">\u2022 Step 3: View Detail</string>
+    <string name="app_description_step_four">\u2022 Step 4: Test</string>
     <string name="step_one">Step 1</string>
     <string name="step_two">Step 2</string>
     <string name="step_three">Step 3</string>
