@@ -46,8 +46,10 @@ public class SearchFragment extends Fragment {
     public static List<String> applicationNameList;
     public static List<String> modelList;
     public static List<String> modelNameList;
+    public static List<String> modelResourceList;
     public static List<String> dataList;
     public static List<String> dataNameList;
+    public static List<String> dataResourceList;
     public static List<String> accuracyList;
     public static List<String> precisionList;
     public static List<String> recallList;
@@ -94,8 +96,8 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(applicationNameList==null){
-                    ToastUtil.showText(SearchFragment.this.getActivity(), "No results available. Please change your filters");
+                if(applicationNameList.size()==0){
+                    ToastUtil.showText(SearchFragment.this.getActivity(), "No results available.\r\nPlease change your filters.");
                 } else{
                     Fragment selectedScreen = OverviewFragment.createFor("Overview");
                     FragmentManager fragmentManager = getFragmentManager();
@@ -128,6 +130,15 @@ public class SearchFragment extends Fragment {
                     }
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        // search result
+                        if (parameterBean==null){
+                            parameterBean = new ParameterBean();
+                        }
+                        parameterBean.setAccuracy((double)seekBar.getProgress()/100+"");
+                        Gson gson = new Gson();
+                        String jsonParameterBean = gson.toJson(parameterBean);
+                        new SearchFragment.AsyncOverviewInformation().execute(jsonParameterBean);
+                        // set progress bar
                         circleView_accuracy.setValueAnimated(seekBar.getProgress(), 1500);
                     }
                 }
@@ -152,6 +163,15 @@ public class SearchFragment extends Fragment {
                     }
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        // search result
+                        if (parameterBean==null){
+                            parameterBean = new ParameterBean();
+                        }
+                        parameterBean.setPrecision((double)seekBar.getProgress()/100+"");
+                        Gson gson = new Gson();
+                        String jsonParameterBean = gson.toJson(parameterBean);
+                        new SearchFragment.AsyncOverviewInformation().execute(jsonParameterBean);
+                        // set progress bar
                         circleView_precision.setValueAnimated(seekBar.getProgress(), 1500);
                     }
                 }
@@ -176,6 +196,15 @@ public class SearchFragment extends Fragment {
                     }
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        // search result
+                        if (parameterBean==null){
+                            parameterBean = new ParameterBean();
+                        }
+                        parameterBean.setRecall((double)seekBar.getProgress()/100+"");
+                        Gson gson = new Gson();
+                        String jsonParameterBean = gson.toJson(parameterBean);
+                        new SearchFragment.AsyncOverviewInformation().execute(jsonParameterBean);
+                        // set progress bar
                         circleView_recall.setValueAnimated(seekBar.getProgress(), 1500);
                     }
                 }
@@ -200,6 +229,15 @@ public class SearchFragment extends Fragment {
                     }
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        // search result
+                        if (parameterBean==null){
+                            parameterBean = new ParameterBean();
+                        }
+                        parameterBean.setF1score((double)seekBar.getProgress()/100+"");
+                        Gson gson = new Gson();
+                        String jsonParameterBean = gson.toJson(parameterBean);
+                        new SearchFragment.AsyncOverviewInformation().execute(jsonParameterBean);
+                        // set progress bar
                         circleView_f1score.setValueAnimated(seekBar.getProgress(), 1500);
                     }
                 }
@@ -442,8 +480,10 @@ public class SearchFragment extends Fragment {
                 applicationNameList = new ArrayList<String>();
                 modelList = new ArrayList<String>();
                 modelNameList = new ArrayList<String>();
+                modelResourceList = new ArrayList<String>();
                 dataList = new ArrayList<String>();
                 dataNameList = new ArrayList<String>();
+                dataResourceList = new ArrayList<String>();
                 accuracyList = new ArrayList<String>();
                 precisionList = new ArrayList<String>();
                 recallList = new ArrayList<String>();
@@ -466,6 +506,10 @@ public class SearchFragment extends Fragment {
                         String a = jsonObject.getJSONObject("dataName").getString("value");
                         dataNameList.add(a);
                     }
+                    if (jsonObject.has("dataResource")) {
+                        String a = jsonObject.getJSONObject("dataResource").getString("value");
+                        dataResourceList.add(a);
+                    }
                     if (jsonObject.has("model")) {
                         String a = jsonObject.getJSONObject("model").getString("value").split("#")[1];
                         modelList.add(a);
@@ -473,6 +517,10 @@ public class SearchFragment extends Fragment {
                     if (jsonObject.has("modelName")) {
                         String a = jsonObject.getJSONObject("modelName").getString("value");
                         modelNameList.add(a);
+                    }
+                    if (jsonObject.has("modelResource")) {
+                        String a = jsonObject.getJSONObject("modelResource").getString("value");
+                        modelResourceList.add(a);
                     }
                     if (jsonObject.has("performanceAccuracy")) {
                         String a = jsonObject.getJSONObject("performanceAccuracy").getString("value");

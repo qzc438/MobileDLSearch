@@ -3,10 +3,12 @@ package com.qzc.mobiledlsearch.fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.Nullable;
@@ -26,7 +29,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
+import com.huxq17.download.Pump;
+import com.huxq17.download.core.DownloadListener;
+import com.huxq17.download.utils.LogUtil;
 import com.ornach.nobobutton.NoboButton;
+import com.qzc.mobiledlsearch.DownloadActivity;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.cards.SliderAdapter;
 
@@ -43,6 +50,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import okhttp3.Request;
+
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
+
 
 public class OverviewFragment extends Fragment {
 
@@ -54,8 +65,10 @@ public class OverviewFragment extends Fragment {
     private String[] applicationNames = SearchFragment.applicationNameList.toArray(new String[SearchFragment.applicationNameList.size()]);
     private String[] datas = SearchFragment.dataList.toArray(new String[SearchFragment.dataList.size()]);
     private String[] dataNames = SearchFragment.dataNameList.toArray(new String[SearchFragment.dataNameList.size()]);
+    private String[] dataResources = SearchFragment.dataResourceList.toArray(new String[SearchFragment.dataResourceList.size()]);
     private String[] models = SearchFragment.modelList.toArray(new String[SearchFragment.modelList.size()]);
     private String[] modelNames = SearchFragment.modelNameList.toArray(new String[SearchFragment.modelNameList.size()]);
+    private String[] modelResources = SearchFragment.modelResourceList.toArray(new String[SearchFragment.modelResourceList.size()]);
     private String[] accuracies = SearchFragment.accuracyList.toArray(new String[SearchFragment.accuracyList.size()]);
     private String[] precisions = SearchFragment.precisionList.toArray(new String[SearchFragment.precisionList.size()]);
     private String[] recalls = SearchFragment.recallList.toArray(new String[SearchFragment.recallList.size()]);
@@ -97,9 +110,11 @@ public class OverviewFragment extends Fragment {
     private CircleProgressBar progressRecall;
     private CircleProgressBar progressF1Score;
 
-    private NoboButton btnDataDetail;
-    private NoboButton btnModelDetail;
-    private NoboButton btnLayerDetail;
+    private NoboButton btnDetail;
+    private NoboButton btnDataDownload;
+    private NoboButton btnModelDownload;
+
+    private ProgressDialog progressDialog;
 
 
     public static OverviewFragment createFor(String text) {
@@ -155,19 +170,29 @@ public class OverviewFragment extends Fragment {
         progressRecall = (CircleProgressBar)view.findViewById(R.id.progress_recall);
         progressF1Score = (CircleProgressBar)view.findViewById(R.id.progress_f1score);
 
+        // go to detail
+        btnDetail = (NoboButton)view.findViewById(R.id.btn_view_detail);
+
         // go to data detail
-        btnDataDetail = (NoboButton)view.findViewById(R.id.btn_view_data_detail);
+        btnDataDownload = (NoboButton)view.findViewById(R.id.btn_data_download);
 
         // go to model detail
-        btnModelDetail = (NoboButton)view.findViewById(R.id.btn_view_model_detail);
+        btnModelDownload = (NoboButton)view.findViewById(R.id.btn_model_download);
 
-        // go to layer detail
-        btnLayerDetail = (NoboButton)view.findViewById(R.id.btn_view_layer_detail);
 
+        initProgressDialog();
         initRecyclerView();
         initApplicationText();
         initSwitchers();
     }
+
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.setTitle("Downloading");
+        progressDialog.setProgress(0);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    }
+
 
     private void initRecyclerView() {
         recyclerView.setAdapter(sliderAdapter);
@@ -186,48 +211,7 @@ public class OverviewFragment extends Fragment {
 
     private void initSwitchers() {
 
-        dataSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DataTextView, false));
-        dataSwitcher.setCurrentText(dataNames[0]);
-
-        new OverviewFragment.AsyncDataDetail().execute(datas[0]);
-
-        btnDataDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String data_id = datas[0];
-                Fragment selectedScreen = DetailFragment.createFor("Detail", "Data");
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.container, selectedScreen);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
-
-        modelSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.ModelTextView, false));
-        modelSwitcher.setCurrentText("Model Name: " + modelNames[0]);
-
-        new OverviewFragment.AsyncModelDetail().execute(models[0]);
-
-        btnModelDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String model_id = models[0];
-                Fragment selectedScreen = DetailFragment.createFor("Detail", "Model");
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.container, selectedScreen);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
-
-        layerSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.LayerTextView, false));
-        layerSwitcher.setCurrentText("Number of layers: " + numberOfLayers[0]);
-
-        btnLayerDetail.setOnClickListener(new View.OnClickListener() {
+        btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String model_id = models[0];
@@ -240,6 +224,38 @@ public class OverviewFragment extends Fragment {
                 ft.commit();
             }
         });
+
+        dataSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.DataTextView, false));
+        dataSwitcher.setCurrentText(dataNames[0]);
+
+        new OverviewFragment.AsyncDataDetail().execute(datas[0]);
+
+        btnDataDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Pump.newRequest(dataResources[0])
+                        .forceReDownload(true)
+                        .submit();
+            }
+        });
+
+        modelSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.ModelTextView, false));
+        modelSwitcher.setCurrentText("Model Name: " + modelNames[0]);
+
+        new OverviewFragment.AsyncModelDetail().execute(models[0]);
+        new OverviewFragment.AsyncLayerDetail().execute(models[0]);
+
+        btnModelDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Pump.newRequest(modelResources[0])
+                        .forceReDownload(true)
+                        .submit();
+            }
+        });
+
+        layerSwitcher.setFactory(new OverviewFragment.TextViewFactory(R.style.LayerTextView, false));
+        layerSwitcher.setCurrentText("Number of layers: " + numberOfLayers[0]);
 
         progressAccuracy.setProgress(Math.round(Float.parseFloat(accuracies[0])*100));
         progressPrecision.setProgress(Math.round(Float.parseFloat(precisions[0])*100));
@@ -320,51 +336,7 @@ public class OverviewFragment extends Fragment {
 
         setApplicationText(applicationNames[pos % applicationNames.length], left2right);
 
-        dataSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
-        dataSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        dataSwitcher.setText(dataNames[pos % dataNames.length]);
-
-        new OverviewFragment.AsyncDataDetail().execute(datas[pos]);
-
-        btnDataDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String data_id = datas[pos];
-                Fragment selectedScreen = DetailFragment.createFor("Detail", "Data");
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.container, selectedScreen);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
-
-        modelSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
-        modelSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        modelSwitcher.setText("Model Name: " + modelNames[pos % modelNames.length]);
-
-        new OverviewFragment.AsyncModelDetail().execute(models[pos]);
-
-        btnModelDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String model_id = models[pos];
-                Fragment selectedScreen = DetailFragment.createFor("Detail", "Model");
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.container, selectedScreen);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
-
-        layerSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
-        layerSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
-        layerSwitcher.setText("Number of Layers: " + numberOfLayers[pos % numberOfLayers.length]);
-
-        btnLayerDetail.setOnClickListener(new View.OnClickListener() {
+        btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String model_id = models[pos];
@@ -377,6 +349,41 @@ public class OverviewFragment extends Fragment {
                 ft.commit();
             }
         });
+
+        dataSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
+        dataSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
+        dataSwitcher.setText(dataNames[pos % dataNames.length]);
+
+        new OverviewFragment.AsyncDataDetail().execute(datas[pos]);
+
+        btnDataDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Pump.newRequest(dataResources[pos])
+                        .forceReDownload(true)
+                        .submit();
+            }
+        });
+
+        modelSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
+        modelSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
+        modelSwitcher.setText("Model Name: " + modelNames[pos % modelNames.length]);
+
+        new OverviewFragment.AsyncModelDetail().execute(models[pos]);
+        new OverviewFragment.AsyncLayerDetail().execute(models[pos]);
+
+        btnModelDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Pump.newRequest(modelResources[pos])
+                        .forceReDownload(true)
+                        .submit();
+            }
+        });
+
+        layerSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animV[0]);
+        layerSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animV[1]);
+        layerSwitcher.setText("Number of Layers: " + numberOfLayers[pos % numberOfLayers.length]);
 
         progressAccuracy.setProgress(Math.round(Float.parseFloat(accuracies[pos])*100));
         progressPrecision.setProgress(Math.round(Float.parseFloat(precisions[pos])*100));
@@ -532,6 +539,45 @@ public class OverviewFragment extends Fragment {
                         String key = (String) iterator.next();
                         String value = jsonObject.getJSONObject(key).getString("value");
                         detailModelList.add(key+": \r\n"+value);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // async model detail information
+    private class AsyncLayerDetail extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = OntologyAPI.getLayerDetail(strings[0]);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            JSONObject json;
+            try {
+                json = new JSONObject(result);
+                JSONArray jsonArray = json.getJSONObject("results").getJSONArray("bindings");
+                detailLayerList = new ArrayList<String>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    Iterator iterator = jsonObject.keys();
+                    while (iterator.hasNext()) {
+                        String key = (String) iterator.next();
+                        String value = jsonObject.getJSONObject(key).getString("value");
+                        String type = jsonObject.getJSONObject(key).getString("type");
+                        if (type.equals("uri")) {
+                            detailLayerList.add(key);
+                        }
+                        if(type.equals("literal")) {
+                            detailLayerList.add(key+": "+value);
+                        }
+
                     }
                 }
             } catch (JSONException e) {

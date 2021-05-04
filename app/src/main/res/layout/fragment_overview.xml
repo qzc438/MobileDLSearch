@@ -95,21 +95,41 @@
 
         </FrameLayout>
 
-<!--        <FrameLayout-->
-<!--            android:id="@+id/frameLayout"-->
-<!--            android:layout_width="110dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_centerVertical="true"-->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
 <!--            android:background="@drawable/domain_background">-->
-
+            <com.ornach.nobobutton.NoboButton
+                android:id="@+id/btn_view_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:padding = "0dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:nb_textSize="18sp"
+                app:nb_textStyle="bold"
+                app:nb_text="@string/view_detail"
+                app:nb_borderColor="#FFFFFF"
+                app:nb_borderWidth="0dp"
+                app:nb_backgroundColor="@color/pink"
+                app:nb_focusColor="@color/holo_red_light"
+                app:nb_textColor="@color/white"
+                app:nb_radius="10dp"
+                app:nb_fontIcon="&#xf0a4;"/>
 <!--            <TextSwitcher-->
 <!--                android:id="@+id/ts_domain"-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
 <!--                android:layout_gravity="center" />-->
 
-<!--        </FrameLayout>-->
+        </FrameLayout>
 
     </RelativeLayout>
 
@@ -298,7 +318,7 @@
             android:textColor="@color/white" />
 
         <com.ornach.nobobutton.NoboButton
-            android:id="@+id/btn_view_data_detail"
+            android:id="@+id/btn_data_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -310,14 +330,14 @@
             android:layout_alignParentRight="true"
             app:nb_textSize="18sp"
             app:nb_textStyle="bold"
-            app:nb_text="@string/view_data_detail"
+            app:nb_text="@string/download_data"
             app:nb_borderColor="#FFFFFF"
             app:nb_borderWidth="0dp"
             app:nb_backgroundColor="@color/yellow"
             app:nb_focusColor="@color/holo_orange_dark"
             app:nb_textColor="@color/white"
             app:nb_radius="10dp"
-            app:nb_fontIcon="&#xf0a4;"/>
+            app:nb_fontIcon="&#xf019;"/>
         </RelativeLayout>
 
     </FrameLayout>
@@ -346,7 +366,7 @@
             android:layout_marginEnd="10dp" />
 
         <com.ornach.nobobutton.NoboButton
-            android:id="@+id/btn_view_model_detail"
+            android:id="@+id/btn_model_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -358,14 +378,14 @@
             android:layout_alignParentRight="true"
             app:nb_textSize="18sp"
             app:nb_textStyle="bold"
-            app:nb_text="@string/view_model_detail"
+            app:nb_text="@string/download_model"
             app:nb_borderColor="#FFFFFF"
             app:nb_borderWidth="0dp"
             app:nb_backgroundColor="@color/green"
             app:nb_focusColor="@color/holo_green_dark"
             app:nb_textColor="@color/white"
             app:nb_radius="10dp"
-            app:nb_fontIcon="&#xf0a4;"/>
+            app:nb_fontIcon="&#xf019;"/>
         </RelativeLayout>
     </FrameLayout>
 
@@ -392,27 +412,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/left_offset" />
 
-        <com.ornach.nobobutton.NoboButton
-            android:id="@+id/btn_view_layer_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:padding = "0dp"
-            android:paddingTop="1dp"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_alignParentRight="true"
-            app:nb_textSize="18sp"
-            app:nb_textStyle="bold"
-            app:nb_text="@string/view_layer_detail"
-            app:nb_borderColor="#FFFFFF"
-            app:nb_borderWidth="0dp"
-            app:nb_backgroundColor="@color/blue"
-            app:nb_focusColor="@color/holo_blue_dark"
-            app:nb_textColor="@color/white"
-            app:nb_radius="10dp"
-            app:nb_fontIcon="&#xf0a4;"/>
         </RelativeLayout>
 
     </FrameLayout>

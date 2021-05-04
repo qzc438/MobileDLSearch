@@ -29,6 +29,7 @@ public class DetailFragment extends Fragment {
 
     private String[] detailDatas = OverviewFragment.detailDataList.toArray(new String[OverviewFragment.detailDataList.size()]);
     private String[] detailModels = OverviewFragment.detailModelList.toArray(new String[OverviewFragment.detailModelList.size()]);
+    private String[] detailLayers = OverviewFragment.detailLayerList.toArray(new String[OverviewFragment.detailLayerList.size()]);
 
     public static DetailFragment createFor(String text, String detail) {
         DetailFragment fragment = new DetailFragment();
@@ -72,7 +73,7 @@ public class DetailFragment extends Fragment {
     private void createItems() {
         addItem("Data", detailDatas, R.color.yellow);
         addItem("Model", detailModels, R.color.green);
-        addItem("Layer", new String[]{"Activity Type: Living Activity", "Activity Location: Single", "Activity Feature: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING"}, R.color.blue);
+        addItem("Layer", detailLayers, R.color.blue);
 //        addItem("Model", new String[]{"Model Name: Vanila CNN", "Model Type: CNN", "Numnber of Layers: 7"}, R.color.pink);
 //        addItem("Train", new String[]{"Backend: Pytorch", "Loss Function: Categorical Crossentropy", "Optimiser: Adam"}, R.color.yellow);
 //        addItem("Performance", new String[]{"Accuracy: 93%", "Precision: 83%", "Recall: 73%", "F1 Score: 63%",}, R.color.green);
@@ -128,8 +129,9 @@ public class DetailFragment extends Fragment {
             public void onClick(View v) {
                 // set dialog here
                 new MaterialDialog.Builder(DetailFragment.this.getActivity())
-//                        .title("title")
+//                        .title(tv.getText())
                         .content(tv.getText())
+                        .contentColor(-16777216)
                         .positiveText(R.string.ok)
 //                        .negativeText("no")
 //                        .positiveColorRes(R.color.blue)

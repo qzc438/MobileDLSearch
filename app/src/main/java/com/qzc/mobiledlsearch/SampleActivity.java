@@ -107,6 +107,9 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
             Fragment selectedScreen = DetailFragment.createFor(screenTitles[position], "Model");
             showFragment(selectedScreen);
         }
+        if (position == POS_TEST) {
+            DownloadListActivity.start(this, "");
+        }
     }
 
     private void showFragment(Fragment fragment) {

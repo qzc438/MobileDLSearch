@@ -147,4 +147,11 @@ public class OntologyAPI {
         return findTextResult(strURL);
     }
 
+    //find layer detail information
+    public static String getLayerDetail(String modelID){
+        String methodURL = "/detail/getLayerDetail/modelID="+modelID;
+        String strURL = baseURL + methodURL;
+        return findTextResult(strURL);
+    }
+
 }
