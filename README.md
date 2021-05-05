@@ -1,8 +1,8 @@
 # MobileDLSearch
-### An intuitive mobile app for search deep learning models.
+### An intuitive mobile app for search deep learning models
+### The data is retrieved from API server: https://github.com/qzc438/OntologyAPI
 ### We also have a web app that can be found in: https://github.com/qzc438/Ontology
-## API Reference
-### API server: https://github.com/qzc438/OntologyAPI
+## Server Reference
 ### Android downloader: https://github.com/huxq17/Pump
 ### Android SPARQL: https://github.com/BorderCloud/SPARQL-ANDROID
 ## UI Reference
