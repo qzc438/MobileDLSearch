@@ -1,5 +1,5 @@
 # MobileDLSearch
-Mobile DL Search
+### An intuitive mobile app for search deep learning models. We also have a website application that can be found in https://github.com/qzc438/Ontology 
 ## API Reference
 ### API server: https://github.com/qzc438/OntologyAPI
 ### Android downloader: https://github.com/huxq17/Pump
@@ -14,3 +14,5 @@ Mobile DL Search
 ### Progress bar: https://github.com/dinuscxj/CircleProgressBar
 ### Dialog: https://github.com/afollestad/material-dialogs
 ### Button: https://github.com/alex31n/NoboButton
+## Thanks to my HD+ supervisors
+### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein, Yuxin Zhang and Dr Abdur Rahim Mohammad Forkan
