@@ -1,5 +1,5 @@
 # MobileDLSearch
-### An intuitive mobile app for search deep learning models
+### An intuitive mobile app for searching deep learning models
 ### The data is retrieved from API server: https://github.com/qzc438/OntologyAPI
 ### We also have a web app that can be found in: https://github.com/qzc438/Ontology
 ## Server Reference
