@@ -424,7 +424,7 @@ public class OverviewFragment extends Fragment {
         progressPrecision.setProgress(Math.round(Float.parseFloat(precisions[pos])*100));
         progressRecall.setProgress(Math.round(Float.parseFloat(recalls[pos])*100));
         progressF1Score.setProgress(Math.round(Float.parseFloat(f1scores[pos])*100));
-        ToastUtil.showText(OverviewFragment.this.getActivity(), "position: "+pos);
+        // ToastUtil.showText(OverviewFragment.this.getActivity(), "position: "+pos);
 
 //        domainSwitcher.setInAnimation(OverviewFragment.this.getActivity(), animH[0]);
 //        domainSwitcher.setOutAnimation(OverviewFragment.this.getActivity(), animH[1]);

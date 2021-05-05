@@ -50,11 +50,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:paddingTop="10dp"
-        android:paddingLeft="50dp"
+        android:paddingLeft="60dp"
         android:paddingRight="30dp"
         android:text="@string/app_description"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="match_parent"

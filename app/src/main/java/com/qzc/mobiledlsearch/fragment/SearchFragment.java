@@ -115,7 +115,7 @@ public class SearchFragment extends Fragment {
         circleView_accuracy.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(float value) {
-                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+                // ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
             }
         });
         seekBar_accuracy = (SeekBar) view.findViewById(R.id.seekBar_accuracy);
@@ -148,7 +148,7 @@ public class SearchFragment extends Fragment {
         circleView_precision.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(float value) {
-                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+                // ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
             }
         });
         seekBar_precision = (SeekBar) view.findViewById(R.id.seekBar_precision);
@@ -181,7 +181,7 @@ public class SearchFragment extends Fragment {
         circleView_recall.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(float value) {
-                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+                // ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
             }
         });
         seekBar_recall = (SeekBar) view.findViewById(R.id.seekBar_recall);
@@ -214,7 +214,7 @@ public class SearchFragment extends Fragment {
         circleView_f1score.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(float value) {
-                ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
+                // ToastUtil.showText(SearchFragment.this.getActivity(), "value:"+value);
             }
         });
         seekBar_f1score = (SeekBar) view.findViewById(R.id.seekBar_f1score);
