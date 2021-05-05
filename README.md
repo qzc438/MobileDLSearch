@@ -18,7 +18,7 @@
 ### Android downloader: https://github.com/huxq17/Pump
 ### Android SPARQL: https://github.com/BorderCloud/SPARQL-ANDROID
 
-## DL Compiler
+## Deep Learning Compiler
 ### https://github.com/amitshekhariitbhu/Android-TensorFlow-Lite-Example
 ### https://medium.com/@estebanuri/real-time-face-recognition-with-android-tensorflow-lite-14e9c6cc53a5
 
