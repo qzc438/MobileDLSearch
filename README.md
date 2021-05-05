@@ -16,4 +16,5 @@
 ### Dialog: https://github.com/afollestad/material-dialogs
 ### Button: https://github.com/alex31n/NoboButton
 ## Thanks to my HD+ supervisors
-### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein, Yuxin Zhang and Dr Abdur Rahim Mohammad Forkan
+### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein
+### Dr Yuxin Zhang, Dr Abdur Rahim Mohammad Forkan
