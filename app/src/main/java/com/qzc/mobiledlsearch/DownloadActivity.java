@@ -20,7 +20,7 @@ import com.huxq17.download.core.DownloadListener;
 import com.huxq17.download.core.DownloadRequest;
 //import com.huxq17.download.demo.installapk.APK;
 import com.huxq17.download.utils.LogUtil;
-import com.qzc.mobiledlsearch.remote.RemoteDownloadListActivity;
+//import com.qzc.mobiledlsearch.remote.RemoteDownloadListActivity;
 
 import java.io.File;
 
@@ -121,8 +121,8 @@ public class DownloadActivity extends AppCompatActivity {
                     boolean groupByTag = false;
                     DownloadListActivity.start(v.getContext(), groupByTag ? TAG : "");
                 });
-        findViewById(R.id.jump_remote_download_list).
-                setOnClickListener(v -> RemoteDownloadListActivity.start(v.getContext()));
+//        findViewById(R.id.jump_remote_download_list).
+//                setOnClickListener(v -> RemoteDownloadListActivity.start(v.getContext()));
 //        findViewById(R.id.jump_webview_download).
 //                setOnClickListener(v -> WebViewDownloadActivity.start(v.getContext()));
     }

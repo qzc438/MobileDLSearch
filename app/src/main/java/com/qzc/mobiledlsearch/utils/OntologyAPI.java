@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class OntologyAPI {
 
-    public static final String baseURL = "http://192.168.0.2:8080/OntologyAPI/api";
+    public static final String baseURL = "http://118.139.86.21:8080/OntologyAPI/api";
 
     public static String findTextResult(String strURL) {
         URL url = null;

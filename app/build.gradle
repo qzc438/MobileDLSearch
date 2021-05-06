@@ -58,9 +58,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.6'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.14'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    //use ViewModel and LiveData
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
     // Handle Dex
     implementation 'com.android.support:multidex:1.0.3'
+    // compiler
+    implementation 'com.wonderkiln:camerakit:0.13.1'
+    implementation 'org.tensorflow:tensorflow-lite:+'
 }
