@@ -23,6 +23,7 @@
 ### Image: https://medium.com/@estebanuri/real-time-face-recognition-with-android-tensorflow-lite-14e9c6cc53a5
 ### Sensor：https://github.com/zhangzhao156/HAR-on-Smartphone
 ### Keras: https://github.com/dspanah/Human-Activity-Recognition-Keras-Android unable to detect downstairs and upstairs
+### TensorFlow: https://github.com/zhangzhao156/HAR-on-Smartphone
 
 ## Thanks to my HD+ supervisors
 ### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein
