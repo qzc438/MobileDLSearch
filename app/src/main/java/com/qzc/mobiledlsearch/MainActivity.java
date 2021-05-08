@@ -1,149 +1,302 @@
 package com.qzc.mobiledlsearch;
 
-import android.graphics.Bitmap;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.speech.tts.TextToSpeech;
+
+import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.wonderkiln.camerakit.CameraKitError;
-import com.wonderkiln.camerakit.CameraKitEvent;
-import com.wonderkiln.camerakit.CameraKitEventListener;
-import com.wonderkiln.camerakit.CameraKitImage;
-import com.wonderkiln.camerakit.CameraKitVideo;
-import com.wonderkiln.camerakit.CameraView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.Locale;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, TextToSpeech.OnInitListener {
 
-    private static final String MODEL_PATH = "mobilenet_quant_v1_224.tflite";
-    private static final boolean QUANT = true;
-    private static final String LABEL_PATH = "labels.txt";
-    private static final int INPUT_SIZE = 224;
+    private static final int N_SAMPLES = 100;
+    private static int prevIdx = -1;
 
-    private com.qzc.mobiledlsearch.Classifier classifier;
+    private static List<Float> ax;
+    private static List<Float> ay;
+    private static List<Float> az;
 
-    private Executor executor = Executors.newSingleThreadExecutor();
-    private TextView textViewResult;
-    private Button btnDetectObject, btnToggleCamera;
-    private ImageView imageViewResult;
-    private CameraView cameraView;
+    private static List<Float> lx;
+    private static List<Float> ly;
+    private static List<Float> lz;
+
+    private static List<Float> gx;
+    private static List<Float> gy;
+    private static List<Float> gz;
+
+    private static List<Float> ma;
+    private static List<Float> ml;
+    private static List<Float> mg;
+
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private Sensor mGyroscope;
+    private Sensor mLinearAcceleration;
+
+
+    private TextView bikingTextView;
+    private TextView downstairsTextView;
+    private TextView joggingTextView;
+    private TextView sittingTextView;
+    private TextView standingTextView;
+    private TextView upstairsTextView;
+    private TextView walkingTextView;
+
+    private TableRow bikingTableRow;
+    private TableRow downstairsTableRow;
+    private TableRow joggingTableRow;
+    private TableRow sittingTableRow;
+    private TableRow standingTableRow;
+    private TableRow upstairsTableRow;
+    private TableRow walkingTableRow;
+
+    private TextToSpeech textToSpeech;
+    private float[] results;
+    private HARClassifier classifier;
+
+    private String[] labels = {"Biking", "Downstairs", "Jogging", "Sitting", "Standing", "Upstairs", "Walking"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cameraView = findViewById(R.id.cameraView);
-        imageViewResult = findViewById(R.id.imageViewResult);
-        textViewResult = findViewById(R.id.textViewResult);
-        textViewResult.setMovementMethod(new ScrollingMovementMethod());
 
-        btnToggleCamera = findViewById(R.id.btnToggleCamera);
-        btnDetectObject = findViewById(R.id.btnDetectObject);
+        ax = new ArrayList<>(); ay = new ArrayList<>(); az = new ArrayList<>();
+        lx = new ArrayList<>(); ly = new ArrayList<>(); lz = new ArrayList<>();
+        gx = new ArrayList<>(); gy = new ArrayList<>(); gz = new ArrayList<>();
+        ma = new ArrayList<>(); ml = new ArrayList<>(); mg = new ArrayList<>();
 
-        cameraView.addCameraKitListener(new CameraKitEventListener() {
-            @Override
-            public void onEvent(CameraKitEvent cameraKitEvent) {
+        bikingTextView = (TextView) findViewById(R.id.biking_prob);
+        downstairsTextView = (TextView) findViewById(R.id.downstairs_prob);
+        joggingTextView = (TextView) findViewById(R.id.jogging_prob);
+        sittingTextView = (TextView) findViewById(R.id.sitting_prob);
+        standingTextView = (TextView) findViewById(R.id.standing_prob);
+        upstairsTextView = (TextView) findViewById(R.id.upstairs_prob);
+        walkingTextView = (TextView) findViewById(R.id.walking_prob);
 
-            }
+        bikingTableRow = (TableRow) findViewById(R.id.biking_row);
+        downstairsTableRow = (TableRow) findViewById(R.id.downstairs_row);
+        joggingTableRow = (TableRow) findViewById(R.id.jogging_row);
+        sittingTableRow = (TableRow) findViewById(R.id.sitting_row);
+        standingTableRow = (TableRow) findViewById(R.id.standing_row);
+        upstairsTableRow = (TableRow) findViewById(R.id.upstairs_row);
+        walkingTableRow = (TableRow) findViewById(R.id.walking_row);
 
-            @Override
-            public void onError(CameraKitError cameraKitError) {
 
-            }
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-            @Override
-            public void onImage(CameraKitImage cameraKitImage) {
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(this, mAccelerometer , SensorManager.SENSOR_DELAY_FASTEST);
 
-                Bitmap bitmap = cameraKitImage.getBitmap();
+        mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        mSensorManager.registerListener(this, mLinearAcceleration , SensorManager.SENSOR_DELAY_FASTEST);
 
-                bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
+        mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        mSensorManager.registerListener(this, mGyroscope , SensorManager.SENSOR_DELAY_FASTEST);
 
-                imageViewResult.setImageBitmap(bitmap);
+        classifier = new HARClassifier(getApplicationContext());
 
-                final List<com.qzc.mobiledlsearch.Classifier.Recognition> results = classifier.recognizeImage(bitmap);
-
-                textViewResult.setText(results.toString());
-
-            }
-
-            @Override
-            public void onVideo(CameraKitVideo cameraKitVideo) {
-
-            }
-        });
-
-        btnToggleCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraView.toggleFacing();
-            }
-        });
-
-        btnDetectObject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraView.captureImage();
-            }
-        });
-
-        initTensorFlowAndLoadModel();
+        textToSpeech = new TextToSpeech(this, this);
+        textToSpeech.setLanguage(Locale.US);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        cameraView.start();
-    }
-
-    @Override
-    protected void onPause() {
-        cameraView.stop();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        executor.execute(new Runnable() {
+    public void onInit(int status) {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                classifier.close();
-            }
-        });
-    }
+                if (results == null || results.length == 0) {
+                    return;
+                }
+                float max = -1;
+                int idx = -1;
+                for (int i = 0; i < results.length; i++) {
+                    if (results[i] > max) {
+                        idx = i;
+                        max = results[i];
+                    }
+                }
 
-    private void initTensorFlowAndLoadModel() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    classifier = TensorFlowImageClassifier.create(
-                            getAssets(),
-                            MODEL_PATH,
-                            LABEL_PATH,
-                            INPUT_SIZE,
-                            QUANT);
-                    makeButtonVisible();
-                } catch (final Exception e) {
-                    throw new RuntimeException("Error initializing TensorFlow!", e);
+                if(max > 0.50 && idx != prevIdx) {
+                    textToSpeech.speak(labels[idx], TextToSpeech.QUEUE_ADD, null,
+                            Integer.toString(new Random().nextInt()));
+                    prevIdx = idx;
                 }
             }
-        });
+        }, 1000, 3000);
     }
 
-    private void makeButtonVisible() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                btnDetectObject.setVisibility(View.VISIBLE);
-            }
-        });
+    protected void onResume() {
+        super.onResume();
+        getSensorManager().registerListener(this, getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_FASTEST);
+        getSensorManager().registerListener(this, getSensorManager().getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
+        getSensorManager().registerListener(this, getSensorManager().getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_FASTEST);
     }
+
+    @Override
+    public void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        activityPrediction();
+
+        Sensor sensor = event.sensor;
+        if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            ax.add(event.values[0]);
+            ay.add(event.values[1]);
+            az.add(event.values[2]);
+
+        } else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+            lx.add(event.values[0]);
+            ly.add(event.values[1]);
+            lz.add(event.values[2]);
+
+        } else if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+            gx.add(event.values[0]);
+            gy.add(event.values[1]);
+            gz.add(event.values[2]);
+
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    private void activityPrediction() {
+
+        List<Float> data = new ArrayList<>();
+
+        if (ax.size() >= N_SAMPLES && ay.size() >= N_SAMPLES && az.size() >= N_SAMPLES
+                && lx.size() >= N_SAMPLES && ly.size() >= N_SAMPLES && lz.size() >= N_SAMPLES
+                && gx.size() >= N_SAMPLES && gy.size() >= N_SAMPLES && gz.size() >= N_SAMPLES
+        ) {
+            double maValue; double mgValue; double mlValue;
+
+            for( int i = 0; i < N_SAMPLES ; i++ ) {
+                maValue = Math.sqrt(Math.pow(ax.get(i), 2) + Math.pow(ay.get(i), 2) + Math.pow(az.get(i), 2));
+                mlValue = Math.sqrt(Math.pow(lx.get(i), 2) + Math.pow(ly.get(i), 2) + Math.pow(lz.get(i), 2));
+                mgValue = Math.sqrt(Math.pow(gx.get(i), 2) + Math.pow(gy.get(i), 2) + Math.pow(gz.get(i), 2));
+
+                ma.add((float)maValue);
+                ml.add((float)mlValue);
+                mg.add((float)mgValue);
+            }
+
+            data.addAll(ax.subList(0, N_SAMPLES));
+            data.addAll(ay.subList(0, N_SAMPLES));
+            data.addAll(az.subList(0, N_SAMPLES));
+
+            data.addAll(lx.subList(0, N_SAMPLES));
+            data.addAll(ly.subList(0, N_SAMPLES));
+            data.addAll(lz.subList(0, N_SAMPLES));
+
+            data.addAll(gx.subList(0, N_SAMPLES));
+            data.addAll(gy.subList(0, N_SAMPLES));
+            data.addAll(gz.subList(0, N_SAMPLES));
+
+            data.addAll(ma.subList(0, N_SAMPLES));
+            data.addAll(ml.subList(0, N_SAMPLES));
+            data.addAll(mg.subList(0, N_SAMPLES));
+
+            results = classifier.predictProbabilities(toFloatArray(data));
+
+            float max = -1;
+            int idx = -1;
+            for (int i = 0; i < results.length; i++) {
+                if (results[i] > max) {
+                    idx = i;
+                    max = results[i];
+                }
+            }
+
+            setProbabilities();
+            setRowsColor(idx);
+
+            ax.clear(); ay.clear(); az.clear();
+            lx.clear(); ly.clear(); lz.clear();
+            gx.clear(); gy.clear(); gz.clear();
+            ma.clear(); ml.clear(); mg.clear();
+        }
+    }
+
+    private void setProbabilities() {
+        bikingTextView.setText(Float.toString(round(results[0], 2)));
+        downstairsTextView.setText(Float.toString(round(results[1], 2)));
+        joggingTextView.setText(Float.toString(round(results[2], 2)));
+        sittingTextView.setText(Float.toString(round(results[3], 2)));
+        standingTextView.setText(Float.toString(round(results[4], 2)));
+        upstairsTextView.setText(Float.toString(round(results[5], 2)));
+        walkingTextView.setText(Float.toString(round(results[6], 2)));
+    }
+
+    private void setRowsColor(int idx) {
+        bikingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+        downstairsTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+        joggingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+        sittingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+        standingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+        upstairsTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+        walkingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+
+        if(idx == 0)
+            //bikingTextView.setBackgroundColor(Color.parseColor("#33B5E5"));
+            bikingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+        else if (idx == 1)
+            downstairsTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+        else if (idx == 2)
+            joggingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+        else if (idx == 3)
+            sittingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+        else if (idx == 4)
+            standingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+        else if (idx == 5)
+            upstairsTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+        else if (idx == 6)
+            walkingTableRow.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+    }
+
+    private float[] toFloatArray(List<Float> list) {
+        int i = 0;
+        float[] array = new float[list.size()];
+
+        for (Float f : list) {
+            array[i++] = (f != null ? f : Float.NaN);
+        }
+        return array;
+    }
+
+    private static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
+    }
+
+    private SensorManager getSensorManager() {
+        return (SensorManager) getSystemService(SENSOR_SERVICE);
+    }
+
 }

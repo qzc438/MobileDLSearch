@@ -20,12 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".AccelerometerActivity"></activity>
+        <activity android:name=".CameraActivity"></activity>
         <activity android:name=".DownloadOriginActivity"></activity>
         <activity android:name=".DownloadActivity"></activity>
         <activity android:name=".DownloadListActivity"></activity>
@@ -37,9 +35,7 @@
         <activity android:name=".ImageActivity" />
         <activity android:name=".SpinnerActivity" />
         <activity android:name=".ExpandingActivity" />
-        <activity android:name=".SampleActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoBar">
+        <activity android:name=".SampleActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme.NoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

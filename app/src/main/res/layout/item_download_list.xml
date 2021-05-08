@@ -13,7 +13,8 @@
         android:id="@+id/iv_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/outline_feed_black_36"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_speed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/iv_icon"
-        app:layout_constraintRight_toLeftOf="@id/bt_status"
-         />
+        app:layout_constraintRight_toLeftOf="@id/bt_status" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -39,21 +39,19 @@
         android:layout_height="22dp"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:text="微信"
-        android:textColor="#666666"
-        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@id/pb_progress"
         app:layout_constraintRight_toLeftOf="@id/bt_status"
-
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvCreateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2020"
-        android:textColor="#666666"
-        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/tvCreateTime"
         app:layout_constraintStart_toStartOf="@id/tv_name"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
@@ -63,29 +61,29 @@
         android:id="@+id/tv_download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="33.3M/100M"
-        android:textColor="#666666"
-        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/tvCreateTime"
         app:layout_constraintBottom_toTopOf="@id/pb_progress"
         app:layout_constraintLeft_toLeftOf="@id/pb_progress" />
+
     <TextView
         android:id="@+id/tv_speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2M/s"
-        android:textColor="#666666"
-        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintTop_toTopOf="@id/tv_download"
         app:layout_constraintRight_toRightOf="@id/pb_progress" />
+
     <TextView
         android:id="@+id/bt_status"
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="暂停"
-        android:textColor="#666666"
-        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -21,6 +21,22 @@
     <string name="performance_recall">Recall</string>
     <string name="performance_f1score">F1 Score</string>
     <string name="ok">OK</string>
+    <string name="test">Test</string>
+
+    <string name="accelerometer_title">Accelerometer</string>
+    <string name="accelerometer_x_value">X Value: %1$.2f</string>
+    <string name="accelerometer_y_value">Y Value: %1$.2f</string>
+    <string name="accelerometer_z_value">Z Value: %1$.2f</string>
+
+    <string name="activity">Activity</string>
+    <string name="probability">Probability</string>
+    <string name="downstairs">Downstairs</string>
+    <string name="jogging">Jogging</string>
+    <string name="sitting">Sitting</string>
+    <string name="standing">Standing</string>
+    <string name="upstairs">Upstairs</string>
+    <string name="walking">Walking</string>
+    <string name="biking">Biking</string>
 
     <string name="sensor_test">Sensor Test</string>
     <string name="action_settings">Settings</string>

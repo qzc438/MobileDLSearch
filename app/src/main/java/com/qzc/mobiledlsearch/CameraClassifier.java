@@ -8,7 +8,7 @@ import java.util.List;
  * Created by amitshekhar on 17/03/18.
  */
 
-public interface Classifier {
+public interface CameraClassifier {
 
     class Recognition {
         /**

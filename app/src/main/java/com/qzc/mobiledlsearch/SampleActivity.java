@@ -18,6 +18,7 @@ import com.qzc.mobiledlsearch.fragment.DetailFragment;
 import com.qzc.mobiledlsearch.fragment.HomeFragment;
 import com.qzc.mobiledlsearch.fragment.OverviewFragment;
 import com.qzc.mobiledlsearch.fragment.SearchFragment;
+import com.qzc.mobiledlsearch.fragment.TestFragment;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 import com.qzc.mobiledlsearch.menu.DrawerAdapter;
@@ -108,7 +109,8 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
             showFragment(selectedScreen);
         }
         if (position == POS_TEST) {
-            DownloadListActivity.start(this, "");
+            Fragment selectedScreen = TestFragment.createFor(screenTitles[position]);
+            showFragment(selectedScreen);
         }
     }
 

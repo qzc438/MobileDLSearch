@@ -24,7 +24,7 @@ import java.util.PriorityQueue;
  * Created by amitshekhar on 17/03/18.
  */
 
-public class TensorFlowImageClassifier implements com.qzc.mobiledlsearch.Classifier {
+public class TensorFlowImageCameraClassifier implements CameraClassifier {
 
     private static final int MAX_RESULTS = 3;
     private static final int BATCH_SIZE = 1;
@@ -39,17 +39,17 @@ public class TensorFlowImageClassifier implements com.qzc.mobiledlsearch.Classif
     private List<String> labelList;
     private boolean quant;
 
-    private TensorFlowImageClassifier() {
+    private TensorFlowImageCameraClassifier() {
 
     }
 
-    static com.qzc.mobiledlsearch.Classifier create(AssetManager assetManager,
-                                                    String modelPath,
-                                                    String labelPath,
-                                                    int inputSize,
-                                                    boolean quant) throws IOException {
+    static CameraClassifier create(AssetManager assetManager,
+                                   String modelPath,
+                                   String labelPath,
+                                   int inputSize,
+                                   boolean quant) throws IOException {
 
-        com.qzc.mobiledlsearch.TensorFlowImageClassifier classifier = new com.qzc.mobiledlsearch.TensorFlowImageClassifier();
+        TensorFlowImageCameraClassifier classifier = new TensorFlowImageCameraClassifier();
         classifier.interpreter = new Interpreter(classifier.loadModelFile(assetManager, modelPath), new Interpreter.Options());
         classifier.labelList = classifier.loadLabelList(assetManager, labelPath);
         classifier.inputSize = inputSize;

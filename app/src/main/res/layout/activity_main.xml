@@ -1,67 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.qzc.mobiledlsearch.MainActivity">
+    android:layout_height="match_parent">
 
-    <com.wonderkiln.camerakit.CameraView
-        android:id="@+id/cameraView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center|top" />
-
-
-    <LinearLayout
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="300dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="#ededed"
+        android:padding="0dp"
+        tools:context="io.github.introml.activityrecognition.MainActivity">
 
-        <ImageView
-            android:id="@+id/imageViewResult"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:padding="2dp" />
-
-        <TextView
-            android:id="@+id/textViewResult"
+        <TableRow
+            android:id="@+id/title_row"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:fadeScrollbars="false"
-            android:gravity="center"
-            android:maxLines="15"
-            android:scrollbars="vertical"
-            android:textColor="@android:color/black" />
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:textAlignment="center"
+            android:background="@android:color/holo_orange_dark">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_weight="1"
+                android:text="@string/activity"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:text="@string/probability"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"/>
+        </TableRow>
 
-    <Button
-        android:id="@+id/btnToggleCamera"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="50dp"
-        android:text="Toggle Camera"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black" />
+        <TableRow
+            android:id="@+id/downstairs_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="20dp">
 
-    <Button
-        android:id="@+id/btnDetectObject"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|center"
-        android:text="Detect Object"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/downstairs_title"
+                android:layout_weight="1"
+                android:text="@string/downstairs"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/downstairs_prob"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/jogging_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/jogging_title"
+                android:layout_weight="1"
+                android:text="@string/jogging"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/jogging_prob"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/sitting_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/sitting_title"
+                android:layout_weight="1"
+                android:text="@string/sitting"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sitting_prob"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/standing_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/standing_title"
+                android:layout_weight="1"
+                android:text="@string/standing"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/standing_prob"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/upstairs_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/upstairs_title"
+                android:layout_weight="1"
+                android:text="@string/upstairs"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/upstairs_prob"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/walking_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/walking_title"
+                android:layout_weight="1"
+                android:text="@string/walking"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/walking_prob"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/biking_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/biking_title"
+                android:layout_weight="1"
+                android:text="@string/biking"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/biking_prob"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+    </TableLayout>
+</ScrollView>

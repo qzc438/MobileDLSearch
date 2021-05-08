@@ -46,6 +46,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -53,6 +54,8 @@ import java.util.List;
 import okhttp3.Request;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
+import static android.os.Environment.getDataDirectory;
+import static android.os.Environment.getDownloadCacheDirectory;
 
 
 public class OverviewFragment extends Fragment {
@@ -193,28 +196,27 @@ public class OverviewFragment extends Fragment {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     }
 
-    private void download(String url){
+    private void download(String url, String id){
         ToastUtil.showText(OverviewFragment.this.getActivity(),"Start downloading...");
 //                Pump.newRequest(dataResources[0])
 //                        .forceReDownload(true)
 //                        .submit();
         progressDialog.setProgress(0);
         progressDialog.show();
+        File filePath = OverviewFragment.this.getActivity().getDir("models1.json", Context.MODE_PRIVATE);
+        String dirPath = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).getAbsolutePath();
         Pump.newRequest(url)
-                .setRequestBuilder(new Request.Builder())
                 .listener(new DownloadListener(OverviewFragment.this.getActivity()) {
-
                     @Override
                     public void onProgress(int progress) {
                         progressDialog.setProgress(progress);
                     }
-
                     @Override
                     public void onSuccess() {
                         progressDialog.dismiss();
-                        Toast.makeText(OverviewFragment.this.getActivity(), "Download Finished: " + getDownloadInfo().getFilePath(), Toast.LENGTH_SHORT).show();
+                        // String id= Pump.getAllDownloadList().get(0).getId();
+                        Toast.makeText(OverviewFragment.this.getActivity(), "Download Finished: " + getDownloadInfo().getFilePath() + ", " + getDownloadInfo().getName(), Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
                     public void onFailed() {
                         progressDialog.dismiss();
@@ -226,7 +228,7 @@ public class OverviewFragment extends Fragment {
                 .forceReDownload(true)
                 //Set how many threads are used when downloading,default 3.
                 .threadNum(3)
-                .setId("123")
+                .setId(id)
                 //Pump will connect server by this OKHttp request builder,so you can customize http request.
                 .setRequestBuilder(new Request.Builder())
                 .setRetry(3, 200)
@@ -271,7 +273,7 @@ public class OverviewFragment extends Fragment {
         btnDataDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                download(dataResources[0]);
+                download(dataResources[0], datas[0]);
             }
         });
 
@@ -284,7 +286,7 @@ public class OverviewFragment extends Fragment {
         btnModelDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                download(modelResources[0]);
+                download(modelResources[0], models[0]);
             }
         });
 
@@ -393,7 +395,7 @@ public class OverviewFragment extends Fragment {
         btnDataDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                download(dataResources[pos]);
+                download(dataResources[pos], datas[pos]);
             }
         });
 
@@ -407,7 +409,7 @@ public class OverviewFragment extends Fragment {
         btnModelDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                download(modelResources[pos]);
+                download(modelResources[pos], models[pos]);
             }
         });
 
