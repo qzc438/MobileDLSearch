@@ -24,6 +24,8 @@
 ### Sensor：https://github.com/zhangzhao156/HAR-on-Smartphone
 ### Keras: https://github.com/dspanah/Human-Activity-Recognition-Keras-Android unable to detect downstairs and upstairs
 ### TensorFlow: https://github.com/zhangzhao156/HAR-on-Smartphone
+### Pytorch: https://github.com/cedrickchee/pytorch-mobile-android
+### https://github.com/cedrickchee/pytorch-mobile-kit
 
 ## Thanks to my HD+ supervisors
 ### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein
