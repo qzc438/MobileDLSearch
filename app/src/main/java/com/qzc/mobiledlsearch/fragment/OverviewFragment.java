@@ -255,7 +255,7 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String model_id = models[0];
-                Fragment selectedScreen = DetailFragment.createFor("Detail", "Layer");
+                Fragment selectedScreen = DetailFragment.createFor("Detail");
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.replace(R.id.container, selectedScreen);
@@ -376,7 +376,7 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String model_id = models[pos];
-                Fragment selectedScreen = DetailFragment.createFor("Detail", "Layer");
+                Fragment selectedScreen = DetailFragment.createFor("Detail");
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.replace(R.id.container, selectedScreen);

@@ -20,10 +20,8 @@ import com.qzc.mobiledlsearch.utils.ToastUtil;
 public class DetailFragment extends Fragment {
 
     private static final String EXTRA_TEXT = "text";
-    private static final String EXTRA_DETAIL = "detail";
     private static final String DATA_ID = "data_id";
     private TextView fragmentText;
-    private TextView fragmentDetail;
     private ImageView btn_back;
     private ExpandingList mExpandingList;
 
@@ -31,11 +29,10 @@ public class DetailFragment extends Fragment {
     private String[] detailModels = OverviewFragment.detailModelList.toArray(new String[OverviewFragment.detailModelList.size()]);
     private String[] detailLayers = OverviewFragment.detailLayerList.toArray(new String[OverviewFragment.detailLayerList.size()]);
 
-    public static DetailFragment createFor(String text, String detail) {
+    public static DetailFragment createFor(String text) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);
-        args.putString(EXTRA_DETAIL, detail);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,9 +49,6 @@ public class DetailFragment extends Fragment {
         String text = args != null ? args.getString(EXTRA_TEXT) : "";
         fragmentText = view.findViewById(R.id.fragment_text);
         fragmentText.setText(text);
-        String detail = args != null ? args.getString(EXTRA_DETAIL) : "";
-        fragmentDetail = view.findViewById(R.id.fragment_detail);
-        fragmentDetail.setText(detail);
         String data_id = args != null ? args.getString(DATA_ID) : "";
 
         btn_back = view.findViewById(R.id.btn_back);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -12,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.huxq17.download.Pump;
 import com.huxq17.download.core.DownloadInfo;
 import com.huxq17.download.utils.LogUtil;
+import com.ornach.nobobutton.NoboButton;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.Utils;
 
@@ -87,7 +91,7 @@ public class TestFragment extends Fragment {
         }
     }
 
-    public static class DownloadAdapter extends RecyclerView.Adapter<DownloadViewHolder> {
+    public class DownloadAdapter extends RecyclerView.Adapter<DownloadViewHolder> {
         List<DownloadInfo> downloadInfoList;
         HashMap<DownloadViewHolder, DownloadInfo> map;
 
@@ -124,25 +128,26 @@ public class TestFragment extends Fragment {
         }
     }
 
-    public static class DownloadViewHolder extends RecyclerView.ViewHolder {
+    public class DownloadViewHolder extends RecyclerView.ViewHolder{
+        ImageView ivDelete;
         ProgressBar progressBar;
         TextView tvName;
-        TextView tvStatus;
         TextView tvSpeed;
         TextView tvCreateTime;
         TextView tvDownload;
+        NoboButton btnTest;
         DownloadInfo downloadInfo;
-        DownloadInfo.Status status;
         AlertDialog dialog;
 
         public DownloadViewHolder(@NonNull View itemView, final DownloadAdapter adapter) {
             super(itemView);
-            progressBar = itemView.findViewById(R.id.pb_progress);
-            tvName = itemView.findViewById(R.id.tv_name);
-            tvStatus = itemView.findViewById(R.id.bt_status);
-            tvSpeed = itemView.findViewById(R.id.tv_speed);
-            tvDownload = itemView.findViewById(R.id.tv_download);
-            tvCreateTime = itemView.findViewById(R.id.tvCreateTime);
+            ivDelete = itemView.findViewById(R.id.iv_icon);
+            ivDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.show();
+                }
+            });
             dialog = new AlertDialog.Builder(itemView.getContext())
                     .setTitle("Confirm delete?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -158,48 +163,36 @@ public class TestFragment extends Fragment {
                         }
                     })
                     .create();
+            progressBar = itemView.findViewById(R.id.pb_progress);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvSpeed = itemView.findViewById(R.id.tv_speed);
+            tvDownload = itemView.findViewById(R.id.tv_download);
+            tvCreateTime = itemView.findViewById(R.id.tvCreateTime);
+            btnTest = itemView.findViewById(R.id.btn_test);
+            btnTest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment selectedScreen = TestDetailFragment.createFor("Test Detail");
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    ft.replace(R.id.container, selectedScreen);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            });
         }
 
         public void bindData(DownloadInfo downloadInfo) {
-
             this.downloadInfo = downloadInfo;
-            this.status = downloadInfo.getStatus();
             tvName.setText(downloadInfo.getName());
             String speed = "";
             int progress = downloadInfo.getProgress();
             progressBar.setProgress(progress);
-
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
             String createTime =format.format(new Date(downloadInfo.getCreateTime()));
             tvCreateTime.setText(createTime);
-
-            switch (status) {
-                case STOPPED:
-                    tvStatus.setText("Start");
-                    break;
-                case PAUSING:
-                    tvStatus.setText("Pausing");
-                    break;
-                case PAUSED:
-                    tvStatus.setText("Continue");
-                    break;
-                case WAIT:
-                    tvStatus.setText("Waiting");
-                    break;
-                case RUNNING:
-                    tvStatus.setText("Pause");
-                    speed = downloadInfo.getSpeed();
-                    break;
-                case FINISHED:
-                    tvStatus.setText("Test");
-                    break;
-                case FAILED:
-                    tvStatus.setText("Retry");
-                    break;
-            }
-
             tvSpeed.setText(speed);
-
             long completedSize = downloadInfo.getCompletedSize();
             long totalSize = downloadInfo.getContentLength();
             tvDownload.setText(Utils.getDataSize(completedSize) + "/" + Utils.getDataSize(totalSize));

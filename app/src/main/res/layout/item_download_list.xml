@@ -11,9 +11,10 @@
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/outline_feed_black_36"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:paddingRight="20dp"
+        android:src="@drawable/outline_clear_black_24"
         app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,6 +76,30 @@
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="@id/tv_download"
         app:layout_constraintRight_toRightOf="@id/pb_progress" />
+
+    <com.ornach.nobobutton.NoboButton
+        android:id="@+id/btn_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="0dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="1dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="2dp"
+        app:nb_backgroundColor="@color/red"
+        app:nb_borderColor="#FFFFFF"
+        app:nb_borderWidth="0dp"
+        app:nb_focusColor="@color/holo_red_dark"
+        app:nb_fontIcon="&#xf04b;"
+        app:nb_radius="10dp"
+        app:nb_text="@string/test"
+        app:nb_textColor="@color/white"
+        app:nb_textSize="20sp"
+        app:nb_textStyle="bold" />
+
 
     <TextView
         android:id="@+id/bt_status"
