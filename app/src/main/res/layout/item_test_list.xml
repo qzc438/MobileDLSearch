@@ -9,7 +9,7 @@
     android:paddingRight="8dp"
     android:paddingBottom="15dp"
     android:orientation="horizontal"
-    android:background="@color/colorBackground">
+    android:id="@+id/layout_activity_list">
 
 
     <TextView

@@ -10,6 +10,8 @@ import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +38,7 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
 
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
+    private ImageView btn_back;
 
     // recycle view
     private final HashMap<ActicityViewHolder, ActivityBean> map = new HashMap<>();
@@ -98,6 +101,16 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
         String text = args != null ? args.getString(EXTRA_TEXT) : "";
         fragmentText = view.findViewById(R.id.fragment_text);
         fragmentText.setText(text);
+
+        // show backwards
+        btn_back = view.findViewById(R.id.btn_back);
+        // back function
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
 
         recyclerView = view.findViewById(R.id.rvActivityList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TestDetailFragment.this.getActivity());
@@ -298,9 +311,9 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
             map.put(viewHolder, activityBean);
             viewHolder.bindData(activityBean);
             if(idx == position){
-                viewHolder.tv_probability.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
+                viewHolder.layout_activity_list.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorBlue, null));
             }else{
-                viewHolder.tv_probability.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
+                viewHolder.layout_activity_list.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorTransparent, null));
             }
         }
 
@@ -321,11 +334,13 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
 
         TextView tv_activity;
         TextView tv_probability;
+        LinearLayout layout_activity_list;
 
         public ActicityViewHolder(@NonNull View itemView, final ActivityAdapter adapter) {
             super(itemView);
             tv_activity = itemView.findViewById(R.id.tv_activity);
             tv_probability = itemView.findViewById(R.id.tv_probability);
+            layout_activity_list = itemView.findViewById(R.id.layout_activity_list);
         }
 
         public void bindData(ActivityBean activityBean) {
