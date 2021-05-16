@@ -19,7 +19,7 @@
 ### Android SPARQL: https://github.com/BorderCloud/SPARQL-ANDROID
 
 ## Deep Learning Compiler
-### Tutorial: https://github.com/amitshekhariitbhu/Android-TensorFlow-Lite-Example
+### Tutorial: https://github.com/amitshekhariitbhu/Android-TensorFlow-Lite-Example (Modified)
 ### Image: https://medium.com/@estebanuri/real-time-face-recognition-with-android-tensorflow-lite-14e9c6cc53a5
 ### Sensor：https://github.com/zhangzhao156/HAR-on-Smartphone
 ### Keras: https://github.com/dspanah/Human-Activity-Recognition-Keras-Android
