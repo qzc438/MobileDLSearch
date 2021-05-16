@@ -43,11 +43,11 @@ public class TensorFlowImageCameraClassifier implements CameraClassifier {
 
     }
 
-    static CameraClassifier create(AssetManager assetManager,
-                                   String modelPath,
-                                   String labelPath,
-                                   int inputSize,
-                                   boolean quant) throws IOException {
+    public static CameraClassifier create(AssetManager assetManager,
+                                          String modelPath,
+                                          String labelPath,
+                                          int inputSize,
+                                          boolean quant) throws IOException {
 
         TensorFlowImageCameraClassifier classifier = new TensorFlowImageCameraClassifier();
         classifier.interpreter = new Interpreter(classifier.loadModelFile(assetManager, modelPath), new Interpreter.Options());

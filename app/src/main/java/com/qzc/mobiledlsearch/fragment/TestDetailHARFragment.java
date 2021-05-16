@@ -34,7 +34,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TestDetailFragment extends Fragment implements SensorEventListener, TextToSpeech.OnInitListener {
+public class TestDetailHARFragment extends Fragment implements SensorEventListener, TextToSpeech.OnInitListener {
 
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
@@ -80,8 +80,8 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
     private String[] labels = {"Biking", "Downstairs", "Jogging", "Sitting", "Standing", "Upstairs", "Walking"};
 
 
-    public static TestDetailFragment createFor(String text) {
-        TestDetailFragment fragment = new TestDetailFragment();
+    public static TestDetailHARFragment createFor(String text) {
+        TestDetailHARFragment fragment = new TestDetailHARFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);
         fragment.setArguments(args);
@@ -91,7 +91,7 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_test_detail, container, false);
+        return inflater.inflate(R.layout.fragment_test_detail_har, container, false);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
         });
 
         recyclerView = view.findViewById(R.id.rvActivityList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TestDetailFragment.this.getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TestDetailHARFragment.this.getActivity());
 
         ActivityList = new ArrayList<ActivityBean>();
         //Get all feature list
@@ -130,7 +130,7 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
         gx = new ArrayList<>(); gy = new ArrayList<>(); gz = new ArrayList<>();
         ma = new ArrayList<>(); ml = new ArrayList<>(); mg = new ArrayList<>();
 
-        mSensorManager = (SensorManager) TestDetailFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager = (SensorManager) TestDetailHARFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
 
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer , SensorManager.SENSOR_DELAY_FASTEST);
@@ -141,9 +141,9 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         mSensorManager.registerListener(this, mGyroscope , SensorManager.SENSOR_DELAY_FASTEST);
 
-        classifier = new HARClassifier(TestDetailFragment.this.getActivity().getApplicationContext());
+        classifier = new HARClassifier(TestDetailHARFragment.this.getActivity().getApplicationContext());
 
-        textToSpeech = new TextToSpeech(TestDetailFragment.this.getActivity(), this);
+        textToSpeech = new TextToSpeech(TestDetailHARFragment.this.getActivity(), this);
         textToSpeech.setLanguage(Locale.US);
     }
 
@@ -366,7 +366,7 @@ public class TestDetailFragment extends Fragment implements SensorEventListener,
     }
 
     private SensorManager getSensorManager() {
-        return (SensorManager) TestDetailFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
+        return (SensorManager) TestDetailHARFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
     }
 
 }

@@ -100,7 +100,6 @@
         app:nb_textSize="20sp"
         app:nb_textStyle="bold" />
 
-
     <TextView
         android:id="@+id/bt_status"
         android:layout_width="80dp"

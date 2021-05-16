@@ -22,6 +22,7 @@ import com.huxq17.download.Pump;
 import com.huxq17.download.core.DownloadInfo;
 import com.huxq17.download.utils.LogUtil;
 import com.ornach.nobobutton.NoboButton;
+import com.qzc.mobiledlsearch.DownloadListActivity;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.Utils;
 
@@ -137,18 +138,20 @@ public class TestFragment extends Fragment {
         TextView tvDownload;
         NoboButton btnTest;
         DownloadInfo downloadInfo;
-        AlertDialog dialog;
+        AlertDialog dialogDelete;
+        AlertDialog dialogTest;
 
         public DownloadViewHolder(@NonNull View itemView, final DownloadAdapter adapter) {
             super(itemView);
+
             ivDelete = itemView.findViewById(R.id.iv_icon);
             ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialog.show();
+                    dialogDelete.show();
                 }
             });
-            dialog = new AlertDialog.Builder(itemView.getContext())
+            dialogDelete = new AlertDialog.Builder(itemView.getContext())
                     .setTitle("Confirm delete?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
@@ -163,24 +166,47 @@ public class TestFragment extends Fragment {
                         }
                     })
                     .create();
+
             progressBar = itemView.findViewById(R.id.pb_progress);
             tvName = itemView.findViewById(R.id.tv_name);
             tvSpeed = itemView.findViewById(R.id.tv_speed);
             tvDownload = itemView.findViewById(R.id.tv_download);
             tvCreateTime = itemView.findViewById(R.id.tvCreateTime);
+
             btnTest = itemView.findViewById(R.id.btn_test);
             btnTest.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Fragment selectedScreen = TestDetailFragment.createFor("Test Detail");
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    ft.replace(R.id.container, selectedScreen);
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft.addToBackStack(null);
-                    ft.commit();
+                    dialogTest.show();
                 }
             });
+            dialogTest = new AlertDialog.Builder(itemView.getContext())
+                    .setTitle("Select Type?")
+                    .setPositiveButton("Sensor Test", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Fragment selectedScreen = TestDetailHARFragment.createFor("Test Detail");
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction ft = fragmentManager.beginTransaction();
+                            ft.replace(R.id.container, selectedScreen);
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            ft.addToBackStack(null);
+                            ft.commit();
+                        }
+                    })
+                    .setNegativeButton("Camera Test", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Fragment selectedScreen = TestDetailCameraFragment.createFor("Test Detail");
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction ft = fragmentManager.beginTransaction();
+                            ft.replace(R.id.container, selectedScreen);
+                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            ft.addToBackStack(null);
+                            ft.commit();
+                        }
+                    })
+                    .create();
         }
 
         public void bindData(DownloadInfo downloadInfo) {
