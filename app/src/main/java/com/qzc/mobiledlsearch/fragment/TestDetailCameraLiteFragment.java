@@ -1,34 +1,21 @@
 package com.qzc.mobiledlsearch.fragment;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.qzc.mobiledlsearch.CameraClassifier;
-import com.qzc.mobiledlsearch.HARClassifier;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.TensorFlowImageCameraClassifier;
-import com.qzc.mobiledlsearch.entity.ActivityBean;
 import com.wonderkiln.camerakit.CameraKitError;
 import com.wonderkiln.camerakit.CameraKitEvent;
 import com.wonderkiln.camerakit.CameraKitEventListener;
@@ -36,18 +23,11 @@ import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class TestDetailCameraFragment extends Fragment {
+public class TestDetailCameraLiteFragment extends Fragment {
 
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
@@ -67,8 +47,8 @@ public class TestDetailCameraFragment extends Fragment {
     private CameraView cameraView;
 
 
-    public static TestDetailCameraFragment createFor(String text) {
-        TestDetailCameraFragment fragment = new TestDetailCameraFragment();
+    public static TestDetailCameraLiteFragment createFor(String text) {
+        TestDetailCameraLiteFragment fragment = new TestDetailCameraLiteFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);
         fragment.setArguments(args);
@@ -177,7 +157,7 @@ public class TestDetailCameraFragment extends Fragment {
             public void run() {
                 try {
                     cameraClassifier = TensorFlowImageCameraClassifier.create(
-                            TestDetailCameraFragment.this.getActivity().getAssets(),
+                            TestDetailCameraLiteFragment.this.getActivity().getAssets(),
                             MODEL_PATH,
                             LABEL_PATH,
                             INPUT_SIZE,
@@ -191,7 +171,7 @@ public class TestDetailCameraFragment extends Fragment {
     }
 
     private void makeButtonVisible() {
-        TestDetailCameraFragment.this.getActivity().runOnUiThread(new Runnable() {
+        TestDetailCameraLiteFragment.this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 btnDetectObject.setVisibility(View.VISIBLE);

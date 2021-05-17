@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity android:name=".PytorchActivity"></activity>
-        <activity android:name=".HARActivity"></activity>
+        <activity android:name=".HARFrozenActivity"></activity>
         <activity android:name=".AccelerometerActivity"></activity>
         <activity android:name=".CameraActivity"></activity>
         <activity android:name=".DownloadOriginActivity"></activity>

@@ -22,7 +22,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HARActivity extends AppCompatActivity implements SensorEventListener, TextToSpeech.OnInitListener {
+public class HARFrozenActivity extends AppCompatActivity implements SensorEventListener, TextToSpeech.OnInitListener {
 
     private static final int N_SAMPLES = 100;
     private static int prevIdx = -1;
@@ -67,7 +67,7 @@ public class HARActivity extends AppCompatActivity implements SensorEventListene
 
     private TextToSpeech textToSpeech;
     private float[] results;
-    private HARClassifier classifier;
+    private HARFrozenClassifier classifier;
 
     private String[] labels = {"Biking", "Downstairs", "Jogging", "Sitting", "Standing", "Upstairs", "Walking"};
 
@@ -109,7 +109,7 @@ public class HARActivity extends AppCompatActivity implements SensorEventListene
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         mSensorManager.registerListener(this, mGyroscope , SensorManager.SENSOR_DELAY_FASTEST);
 
-        classifier = new HARClassifier(getApplicationContext());
+        classifier = new HARFrozenClassifier(getApplicationContext());
 
         textToSpeech = new TextToSpeech(this, this);
         textToSpeech.setLanguage(Locale.US);

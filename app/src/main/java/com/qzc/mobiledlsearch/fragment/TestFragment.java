@@ -22,7 +22,6 @@ import com.huxq17.download.Pump;
 import com.huxq17.download.core.DownloadInfo;
 import com.huxq17.download.utils.LogUtil;
 import com.ornach.nobobutton.NoboButton;
-import com.qzc.mobiledlsearch.DownloadListActivity;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.Utils;
 
@@ -180,33 +179,96 @@ public class TestFragment extends Fragment {
                     dialogTest.show();
                 }
             });
-            dialogTest = new AlertDialog.Builder(itemView.getContext())
-                    .setTitle("Select Type?")
-                    .setPositiveButton("Sensor Test", new DialogInterface.OnClickListener() {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+            builder.setTitle("Select Type?");
+            builder.setCancelable(true);
+            final String[] types = new String[]{"Sensor-FrozenGraph", "Sensor-TensorFlow-Lite", "Camera-TensorFlow-Lite", "Camera-Pytorch-Lite"};
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setIcon(R.mipmap.ic_launcher)
+                    .setItems(types, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Fragment selectedScreen = TestDetailHARFragment.createFor("Test Detail");
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction ft = fragmentManager.beginTransaction();
-                            ft.replace(R.id.container, selectedScreen);
-                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                            ft.addToBackStack(null);
-                            ft.commit();
+                            if (types[which].equals("Sensor-FrozenGraph")){
+                                Fragment selectedScreen = TestDetailHARFrozenFragment.createFor("Test Detail");
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                ft.replace(R.id.container, selectedScreen);
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                ft.addToBackStack(null);
+                                ft.commit();
+                            } else if (types[which].equals("Sensor-TensorFlow-Lite")) {
+                                Fragment selectedScreen = TestDetailHARLiteFragment.createFor("Test Detail");
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                ft.replace(R.id.container, selectedScreen);
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                ft.addToBackStack(null);
+                                ft.commit();
+                            } else if (types[which].equals("Camera-TensorFlow-Lite")) {
+                                Fragment selectedScreen = TestDetailCameraLiteFragment.createFor("Test Detail");
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                ft.replace(R.id.container, selectedScreen);
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                ft.addToBackStack(null);
+                                ft.commit();
+                            } else if (types[which].equals("Camera-Pytorch-Lite")) {
+                                Fragment selectedScreen = TestDetailCameraPytorchFragment.createFor("Test Detail");
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                ft.replace(R.id.container, selectedScreen);
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                ft.addToBackStack(null);
+                                ft.commit();
+                            }
+
                         }
-                    })
-                    .setNegativeButton("Camera Test", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Fragment selectedScreen = TestDetailCameraFragment.createFor("Test Detail");
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction ft = fragmentManager.beginTransaction();
-                            ft.replace(R.id.container, selectedScreen);
-                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                            ft.addToBackStack(null);
-                            ft.commit();
-                        }
-                    })
-                    .create();
+                    }).create();
+            //set positive button
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            //set negative button
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            dialogTest = builder.create();
+
+//            dialogTest = new AlertDialog.Builder(itemView.getContext())
+//                    .setTitle("Select Type?")
+//                    .setPositiveButton("Sensor Test", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            Fragment selectedScreen = TestDetailHARFrozenFragment.createFor("Test Detail");
+//                            FragmentManager fragmentManager = getFragmentManager();
+//                            FragmentTransaction ft = fragmentManager.beginTransaction();
+//                            ft.replace(R.id.container, selectedScreen);
+//                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                            ft.addToBackStack(null);
+//                            ft.commit();
+//                        }
+//                    })
+//                    .setNegativeButton("Camera Test", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            Fragment selectedScreen = TestDetailCameraFragment.createFor("Test Detail");
+//                            FragmentManager fragmentManager = getFragmentManager();
+//                            FragmentTransaction ft = fragmentManager.beginTransaction();
+//                            ft.replace(R.id.container, selectedScreen);
+//                            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                            ft.addToBackStack(null);
+//                            ft.commit();
+//                        }
+//                    })
+//                    .create();
+
         }
 
         public void bindData(DownloadInfo downloadInfo) {

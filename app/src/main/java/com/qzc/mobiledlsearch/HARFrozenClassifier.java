@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
-public class HARClassifier {
+public class HARFrozenClassifier {
     static {
         System.loadLibrary("tensorflow_inference");
     }
@@ -17,7 +17,7 @@ public class HARClassifier {
     private static final long[] INPUT_SIZE = {1, 100, 12};
     private static final int OUTPUT_SIZE = 7;
 
-    public HARClassifier(final Context context) {
+    public HARFrozenClassifier(final Context context) {
         inferenceInterface = new TensorFlowInferenceInterface(context.getAssets(), MODEL_FILE);
     }
 
