@@ -21,11 +21,11 @@
 ## Deep Learning Compiler
 ### Tutorial: https://medium.com/@estebanuri/real-time-face-recognition-with-android-tensorflow-lite-14e9c6cc53a5
 ### Sensor：https://github.com/zhangzhao156/HAR-on-Smartphone
-### Keras: https://github.com/amitshekhariitbhu/Android-TensorFlow-Lite-Example (Modified)
-### https://github.com/dspanah/Human-Activity-Recognition-Keras-Android
-### Pytorch: https://github.com/tusharck/Object-Detector-Android-App-Using-PyTorch-Mobile-Neural-Network
-### https://github.com/cedrickchee/pytorch-mobile-android
-### https://github.com/cedrickchee/pytorch-mobile-kit
+### Keras: https://github.com/amitshekhariitbhu/Android-TensorFlow-Lite-Example (Image and HAR Test)
+### https://github.com/dspanah/Human-Activity-Recognition-Keras-Android (HAR)
+### Pytorch: https://github.com/tusharck/Object-Detector-Android-App-Using-PyTorch-Mobile-Neural-Network (Image)
+### https://github.com/cedrickchee/pytorch-mobile-android (Image, NLP)
+### https://github.com/cedrickchee/pytorch-mobile-kit (Image, NLP)
 
 ## Thanks to my HD+ supervisors
 ### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein
