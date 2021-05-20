@@ -167,7 +167,7 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
                 // remove log
                 textLogs.setText("");
                 // start timer
-                timer.setBase(SystemClock.elapsedRealtime());//计时器清零
+                timer.setBase(SystemClock.elapsedRealtime());
                 timer.start();
             }
         });
