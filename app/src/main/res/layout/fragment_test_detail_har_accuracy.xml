@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        android:paddingLeft="7dp"
+        android:paddingRight="24dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/outline_arrow_back_black_24"
+            app:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/location_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/step_four"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/outline_double_arrow_black_24"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/fragment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp">
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/table_user_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/txt_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:text="Label"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spn_activity_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:backgroundTint="@color/white"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/txt_attempts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:text="Attempt(s)"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etxt_attempts"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:tint="@color/white"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/txt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:text="Time"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <Chronometer
+                    android:id="@+id/txt_real_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:format="%s"/>
+
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:id = "@+id/user_control_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/table_user_input"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <com.ornach.nobobutton.NoboButton
+                android:id="@+id/btn_start_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:padding="0dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="1dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="2dp"
+                app:nb_backgroundColor="@color/pink"
+                app:nb_borderColor="#FFFFFF"
+                app:nb_borderWidth="0dp"
+                app:nb_focusColor="@color/holo_red_dark"
+                app:nb_fontIcon="&#xf04b;"
+                app:nb_radius="10dp"
+                app:nb_text="@string/start"
+                app:nb_textColor="@color/white"
+                app:nb_textSize="24sp"
+                app:nb_textStyle="bold" />
+
+            <com.ornach.nobobutton.NoboButton
+                android:id="@+id/btn_resume_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="0dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="1dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="2dp"
+                app:nb_backgroundColor="@color/yellow"
+                app:nb_borderColor="#FFFFFF"
+                app:nb_borderWidth="0dp"
+                app:nb_focusColor="@color/holo_red_dark"
+                app:nb_fontIcon="&#xf111;"
+                app:nb_radius="10dp"
+                app:nb_text="@string/resume"
+                app:nb_textColor="@color/white"
+                app:nb_textSize="24sp"
+                app:nb_textStyle="bold" />
+
+            <com.ornach.nobobutton.NoboButton
+                android:id="@+id/btn_stop_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:padding="0dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="1dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="2dp"
+                app:nb_backgroundColor="@color/green_dot_big"
+                app:nb_borderColor="#FFFFFF"
+                app:nb_borderWidth="0dp"
+                app:nb_focusColor="@color/holo_red_dark"
+                app:nb_fontIcon="&#xf04d;"
+                app:nb_radius="10dp"
+                app:nb_text="@string/stop"
+                app:nb_textColor="@color/white"
+                app:nb_textSize="24sp"
+                app:nb_textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/progress_bar_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_below="@+id/table_user_input"
+            android:layout_toRightOf="@+id/user_control_panel">
+
+            <at.grabner.circleprogress.CircleProgressView
+                android:id="@+id/circleView_test_accuracy"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cpv_autoTextSize="true"
+                app:cpv_barColor="@color/red"
+                app:cpv_barWidth="10dp"
+                app:cpv_innerContourSize="0dp"
+                app:cpv_maxValue="100"
+                app:cpv_outerContourSize="0dp"
+                app:cpv_rimColor="@color/holo_gray_light"
+                app:cpv_rimWidth="10dp"
+                app:cpv_seekMode="true"
+                app:cpv_showUnit="true"
+                app:cpv_spinColor="@color/red"
+                app:cpv_textColor="@color/red"
+                app:cpv_textScale="1"
+                app:cpv_unit="%"
+                app:cpv_unitColor="@color/red"
+                app:cpv_unitPosition="right_top"
+                app:cpv_unitScale="1"
+                app:cpv_value="0"/>
+
+            <TextView
+                android:id="@+id/txt_test_accuracy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txt_test_attempts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_detail_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_control_panel"
+            android:layout_marginTop="20dp"
+            android:text="Test Result"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <ScrollView
+            android:id="@+id/scrollLogs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_detail_results"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/textLogs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </ScrollView>
+
+    </RelativeLayout>
+
+</FrameLayout>

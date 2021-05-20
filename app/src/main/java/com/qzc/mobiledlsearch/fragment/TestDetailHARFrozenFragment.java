@@ -286,7 +286,7 @@ public class TestDetailHARFrozenFragment extends Fragment implements SensorEvent
             public void run() {
                 textToSpeech.speak(labels[idx], TextToSpeech.QUEUE_ADD, null, Integer.toString(new Random().nextInt()));
             }
-        }, 1000, 2000);
+        }, 2000, 2000);
     }
 
     public class ActivityAdapter extends RecyclerView.Adapter<ActicityViewHolder> {
