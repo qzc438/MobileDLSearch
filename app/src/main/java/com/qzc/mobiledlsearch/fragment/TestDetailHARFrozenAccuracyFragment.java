@@ -51,7 +51,6 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
     private NoboButton btn_resume_test;
     private NoboButton btn_stop_test;
     private CircleProgressView circleView_test_accuracy;
-    private TextView txt_test_accuracy;
     private TextView txt_test_attempts;
     private ScrollView scrollLogs;
     private TextView textLogs;
@@ -125,7 +124,6 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
             }
         });
 
-        txt_test_accuracy = view.findViewById(R.id.txt_test_accuracy);
         txt_test_attempts = view.findViewById(R.id.txt_test_attempts);
         circleView_test_accuracy = view.findViewById(R.id.circleView_test_accuracy);
         spn_activity_list = view.findViewById(R.id.spn_activity_list);
@@ -336,7 +334,6 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
                 int totalCount = resultList.size();
                 float accuracy = (float)count/(float)totalCount;
                 circleView_test_accuracy.setValueAnimated(accuracy*100);
-                txt_test_accuracy.setText("Accuracy: " + round(accuracy,2));
                 txt_test_attempts.setText("Attempts: " + resultList.size());
 
                 ax.clear(); ay.clear(); az.clear();

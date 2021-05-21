@@ -244,15 +244,6 @@
                 app:cpv_value="0"/>
 
             <TextView
-                android:id="@+id/txt_test_accuracy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <TextView
                 android:id="@+id/txt_test_attempts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -267,10 +258,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/user_control_panel"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="Test Result"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
         <ScrollView
