@@ -222,20 +222,21 @@ public class TestDetailHARLiteFragment extends Fragment implements SensorEventLi
         ) {
             float[][][] data = new float[1][128][9];
             for (int i = 0; i<128; i++){
-                data[0][i][0]  = ax.get(i);
-                data[0][i][1]  = ay.get(i);
-                data[0][i][2]  = az.get(i);
-                data[0][i][3]  = lx.get(i);
-                data[0][i][4]  = ly.get(i);
-                data[0][i][5]  = lz.get(i);
-                data[0][i][6]  = gx.get(i);
-                data[0][i][7]  = gy.get(i);
-                data[0][i][8]  = gz.get(i);
+
+                data[0][i][0]  = lx.get(i);
+                data[0][i][1]  = ly.get(i);
+                data[0][i][2]  = lz.get(i);
+                data[0][i][3]  = gx.get(i);
+                data[0][i][4]  = gy.get(i);
+                data[0][i][5]  = gz.get(i);
+                data[0][i][6]  = ax.get(i);
+                data[0][i][7]  = ay.get(i);
+                data[0][i][8]  = az.get(i);
             }
 
+            Log.e("data...", data[0][0][0]+"");
             results = classifier.recognizeHAR(data);
-
-            Log.e("Sensor...", results[0][2]+"");
+            Log.e("Sensor...", results[0][0]+"");
 
             // find the max position
             idx = -1;

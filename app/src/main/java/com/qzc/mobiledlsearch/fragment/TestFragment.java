@@ -183,7 +183,7 @@ public class TestFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
             builder.setTitle("Select Type?");
             builder.setCancelable(true);
-            final String[] types = new String[]{"Sensor-FrozenGraph", "Sensor-FrozenGraph-2", "Sensor-TensorFlow-Lite", "Camera-TensorFlow-Lite", "Camera-Pytorch-Lite"};
+            final String[] types = new String[]{"Sensor-FrozenGraph", "Sensor-FrozenGraph-2", "Sensor-TensorFlow-Lite", "Sensor-TensorFlow-Lite-2", "Camera-TensorFlow-Lite", "Camera-Pytorch-Lite"};
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setIcon(R.mipmap.ic_launcher)
                     .setItems(types, new DialogInterface.OnClickListener() {
@@ -207,6 +207,14 @@ public class TestFragment extends Fragment {
                                 ft.commit();
                             } else if (types[which].equals("Sensor-TensorFlow-Lite")) {
                                 Fragment selectedScreen = TestDetailHARLiteFragment.createFor("Test Detail");
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                ft.replace(R.id.container, selectedScreen);
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                ft.addToBackStack(null);
+                                ft.commit();
+                            } else if (types[which].equals("Sensor-TensorFlow-Lite-2")) {
+                                Fragment selectedScreen = TestDetailHARLiteAccuracyFragment.createFor("Test Detail");
                                 FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction ft = fragmentManager.beginTransaction();
                                 ft.replace(R.id.container, selectedScreen);
