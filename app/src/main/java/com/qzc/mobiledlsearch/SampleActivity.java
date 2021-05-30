@@ -18,6 +18,9 @@ import com.qzc.mobiledlsearch.fragment.DetailFragment;
 import com.qzc.mobiledlsearch.fragment.HomeFragment;
 import com.qzc.mobiledlsearch.fragment.OverviewFragment;
 import com.qzc.mobiledlsearch.fragment.SearchFragment;
+import com.qzc.mobiledlsearch.fragment.TestDetailHARFrozenAccuracyFragment;
+import com.qzc.mobiledlsearch.fragment.TestDetailHARLiteAccuracyFragment;
+import com.qzc.mobiledlsearch.fragment.TestDetailHARLitePytorchAccuracyFragment;
 import com.qzc.mobiledlsearch.fragment.TestFragment;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -109,7 +112,10 @@ public class SampleActivity extends AppCompatActivity implements DrawerAdapter.O
             showFragment(selectedScreen);
         }
         if (position == POS_TEST) {
-            Fragment selectedScreen = TestFragment.createFor(screenTitles[position]);
+//            Fragment selectedScreen = TestFragment.createFor(screenTitles[position]);
+//            Fragment selectedScreen = TestDetailHARLiteAccuracyFragment.createFor(screenTitles[position]);
+//            Fragment selectedScreen = TestDetailHARLitePytorchAccuracyFragment.createFor(screenTitles[position]);
+            Fragment selectedScreen = TestDetailHARFrozenAccuracyFragment.createFor(screenTitles[position]);
             showFragment(selectedScreen);
         }
     }

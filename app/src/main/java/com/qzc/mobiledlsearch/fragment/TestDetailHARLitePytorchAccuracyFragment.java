@@ -24,20 +24,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ornach.nobobutton.NoboButton;
-import com.qzc.mobiledlsearch.HARFrozenClassifier;
+import com.qzc.mobiledlsearch.Classifier;
 import com.qzc.mobiledlsearch.R;
+import com.qzc.mobiledlsearch.TensorFlowHARClassifier;
 import com.qzc.mobiledlsearch.utils.ToastUtil;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import at.grabner.circleprogress.CircleProgressView;
 
-public class TestDetailHARFrozenAccuracyFragment extends Fragment implements SensorEventListener{
+public class TestDetailHARLitePytorchAccuracyFragment extends Fragment implements SensorEventListener{
 
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
@@ -55,10 +56,19 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
     private ScrollView scrollLogs;
     private TextView textLogs;
 
+    private static final String MODEL_PATH = "CNN_Pytorch.tflite";
+    private static final boolean QUANT = false;
+    private static final String LABEL_PATH = "labels2.txt";
+    private static final int N_SAMPLES = 128;
+
+    private Classifier classifier;
+
+    private Executor executor = Executors.newSingleThreadExecutor();
+
+
     private List<String> resultList = new ArrayList<>();
 
-    // deep learning
-    private static final int N_SAMPLES = 100;
+
     // max position
     int idx = -1;
 
@@ -85,15 +95,13 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
     // only true then collect data from sensors
     private boolean mIsSensorUpdateEnabled = false;
 
-    private float[] results;
-    private HARFrozenClassifier classifier;
-
-    private String[] labels = {"Biking", "Downstairs", "Jogging", "Sitting", "Standing", "Upstairs", "Walking"};
+    private float[][] results;
+    private String[] labels = {"WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING"};
     private String selectedLabel = "Sitting";
 
 
-    public static TestDetailHARFrozenAccuracyFragment createFor(String text) {
-        TestDetailHARFrozenAccuracyFragment fragment = new TestDetailHARFrozenAccuracyFragment();
+    public static TestDetailHARLitePytorchAccuracyFragment createFor(String text) {
+        TestDetailHARLitePytorchAccuracyFragment fragment = new TestDetailHARLitePytorchAccuracyFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);
         fragment.setArguments(args);
@@ -133,15 +141,14 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
         textLogs = view.findViewById(R.id.textLogs);
 
         List<CharSequence> dataActivity  = new ArrayList<CharSequence>();
-        dataActivity.add("Biking");
-        dataActivity.add("Downstairs");
-        dataActivity.add("Jogging");
-        dataActivity.add("Sitting");
-        dataActivity.add("Standing");
-        dataActivity.add("Upstairs");
-        dataActivity.add("Walking");
+        dataActivity.add("WALKING");
+        dataActivity.add("WALKING_UPSTAIRS");
+        dataActivity.add("WALKING_DOWNSTAIRS");
+        dataActivity.add("SITTING");
+        dataActivity.add("STANDING");
+        dataActivity.add("LAYING");
 
-        ArrayAdapter<CharSequence> adapterActivity = new ArrayAdapter<CharSequence>(TestDetailHARFrozenAccuracyFragment.this.getActivity(),
+        ArrayAdapter<CharSequence> adapterActivity = new ArrayAdapter<CharSequence>(TestDetailHARLitePytorchAccuracyFragment.this.getActivity(),
                 R.layout.my_spinner, dataActivity);
         adapterActivity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_activity_list.setAdapter(adapterActivity);
@@ -202,14 +209,32 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
         gx = new ArrayList<>(); gy = new ArrayList<>(); gz = new ArrayList<>();
         ma = new ArrayList<>(); ml = new ArrayList<>(); mg = new ArrayList<>();
 
-        mSensorManager = (SensorManager) TestDetailHARFrozenAccuracyFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager = (SensorManager) TestDetailHARLitePytorchAccuracyFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
 
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        classifier = new HARFrozenClassifier(TestDetailHARFrozenAccuracyFragment.this.getActivity().getApplicationContext());
+        initTensorFlowAndLoadModel();
 
+    }
+
+    private void initTensorFlowAndLoadModel() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    classifier = TensorFlowHARClassifier.create(
+                            TestDetailHARLitePytorchAccuracyFragment.this.getActivity().getAssets(),
+                            MODEL_PATH,
+                            LABEL_PATH,
+                            N_SAMPLES,
+                            QUANT);
+                } catch (final Exception e) {
+                    throw new RuntimeException("Error initializing TensorFlow!", e);
+                }
+            }
+        });
     }
 
     private void startSensors(){
@@ -219,7 +244,7 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
             mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_FASTEST);
             mIsSensorUpdateEnabled =true;
         }else{
-            ToastUtil.showText(TestDetailHARFrozenAccuracyFragment.this.getActivity(), "Not all required sensor is detected. The result may inaccurate.");
+            ToastUtil.showText(TestDetailHARLitePytorchAccuracyFragment.this.getActivity(), "Not all required sensor is detected. The result may inaccurate.");
         }
     }
 
@@ -274,8 +299,6 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
 
     private void activityPrediction() {
 
-        List<Float> data = new ArrayList<>();
-
         if (ax.size() >= N_SAMPLES && ay.size() >= N_SAMPLES && az.size() >= N_SAMPLES
                 && lx.size() >= N_SAMPLES && ly.size() >= N_SAMPLES && lz.size() >= N_SAMPLES
                 && gx.size() >= N_SAMPLES && gy.size() >= N_SAMPLES && gz.size() >= N_SAMPLES
@@ -283,48 +306,35 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
 
             if (resultList.size() < Integer.parseInt(etxt_attempts.getText().toString()))
             {
-                double maValue; double mgValue; double mlValue;
+                float[][][] data = new float[1][128][9];
+                for (int i = 0; i<128; i++){
 
-                for( int i = 0; i < N_SAMPLES ; i++ ) {
-                    maValue = Math.sqrt(Math.pow(ax.get(i), 2) + Math.pow(ay.get(i), 2) + Math.pow(az.get(i), 2));
-                    mlValue = Math.sqrt(Math.pow(lx.get(i), 2) + Math.pow(ly.get(i), 2) + Math.pow(lz.get(i), 2));
-                    mgValue = Math.sqrt(Math.pow(gx.get(i), 2) + Math.pow(gy.get(i), 2) + Math.pow(gz.get(i), 2));
-
-                    ma.add((float)maValue);
-                    ml.add((float)mlValue);
-                    mg.add((float)mgValue);
+                    data[0][i][0]  = lx.get(i);
+                    data[0][i][1]  = ly.get(i);
+                    data[0][i][2]  = lz.get(i);
+                    data[0][i][3]  = gx.get(i);
+                    data[0][i][4]  = gy.get(i);
+                    data[0][i][5]  = gz.get(i);
+                    data[0][i][6]  = ax.get(i);
+                    data[0][i][7]  = ay.get(i);
+                    data[0][i][8]  = az.get(i);
                 }
 
-                data.addAll(ax.subList(0, N_SAMPLES));
-                data.addAll(ay.subList(0, N_SAMPLES));
-                data.addAll(az.subList(0, N_SAMPLES));
-
-                data.addAll(lx.subList(0, N_SAMPLES));
-                data.addAll(ly.subList(0, N_SAMPLES));
-                data.addAll(lz.subList(0, N_SAMPLES));
-
-                data.addAll(gx.subList(0, N_SAMPLES));
-                data.addAll(gy.subList(0, N_SAMPLES));
-                data.addAll(gz.subList(0, N_SAMPLES));
-
-                data.addAll(ma.subList(0, N_SAMPLES));
-                data.addAll(ml.subList(0, N_SAMPLES));
-                data.addAll(mg.subList(0, N_SAMPLES));
-
-                results = classifier.predictProbabilities(toFloatArray(data));
+                Log.e("data...", data[0][0][0]+"");
+                results = classifier.recognizeHAR(data);
+                Log.e("Sensor...", results[0][0]+"");
 
                 // find the max position
                 idx = -1;
                 float max = -1;
-                for (int i = 0; i < results.length; i++) {
-                    if (results[i] > max) {
+                for (int i = 0; i < results[0].length; i++) {
+                    if (results[0][i] > max) {
                         idx = i;
-                        max = results[i];
+                        max = results[0][i];
                     }
                 }
 
                 // ToastUtil.showText(TestDetailHARFrozenAccuracyFragment.this.getActivity(), "Activity: " + labels[idx]);
-                Log.e("Activity", labels[idx]);
                 resultList.add(labels[idx]);
                 // add to log
                 String logStr = String.format("Attempt %s detected: %s \n", resultList.size(), labels[idx]);
@@ -348,16 +358,6 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
         }
     }
 
-    private float[] toFloatArray(List<Float> list) {
-        int i = 0;
-        float[] array = new float[list.size()];
-
-        for (Float f : list) {
-            array[i++] = (f != null ? f : Float.NaN);
-        }
-        return array;
-    }
-
     private static float round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
@@ -365,7 +365,7 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
     }
 
     private SensorManager getSensorManager() {
-        return (SensorManager) TestDetailHARFrozenAccuracyFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
+        return (SensorManager) TestDetailHARLitePytorchAccuracyFragment.this.getActivity().getSystemService(Context.SENSOR_SERVICE);
     }
 
 }
