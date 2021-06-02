@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class OntologyAPI {
 
-    public static final String baseURL = "http://118.139.72.114:8080/OntologyAPI/api";
+    public static final String baseURL = "http://118.139.90.188:8080/OntologyAPI/api";
 
     public static String findTextResult(String strURL) {
         URL url = null;
@@ -98,9 +98,37 @@ public class OntologyAPI {
         return findTextResult(strURL);
     }
 
+    // data feature
+    public static String getDataFeature() {
+        String methodURL = "/filter/getDataFeature";
+        String strURL = baseURL + methodURL;
+        return findTextResult(strURL);
+    }
+
+    // model backend
+    public static String getModelBackend() {
+        String methodURL = "/filter/getModelBackend";
+        String strURL = baseURL + methodURL;
+        return findTextResult(strURL);
+    }
+
     // model type
     public static String getModelType() {
         String methodURL = "/filter/getModelType";
+        String strURL = baseURL + methodURL;
+        return findTextResult(strURL);
+    }
+
+    // model loss function
+    public static String getModelLossFunction() {
+        String methodURL = "/filter/getModelLossFunction";
+        String strURL = baseURL + methodURL;
+        return findTextResult(strURL);
+    }
+
+    // model optimiser
+    public static String getModelOptimiser() {
+        String methodURL = "/filter/getModelOptimiser";
         String strURL = baseURL + methodURL;
         return findTextResult(strURL);
     }

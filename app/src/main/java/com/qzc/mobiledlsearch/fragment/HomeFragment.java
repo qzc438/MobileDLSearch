@@ -28,7 +28,11 @@ public class HomeFragment extends Fragment {
     public static List<String> applicationDomainList;
     public static List<String> applicationAreaList;
     public static List<String> dataSensorTypeList;
+    public static List<String> dataFeatureList;
+    public static List<String> modelBackendList;
     public static List<String> modelTypeList;
+    public static List<String> modelLossFunctionList;
+    public static List<String> modelOptimiserList;
     public static List<String> layerTypeList;
     public static List<String> coreLayerTypeList;
     public static List<String> functionalLayerTypeList;
@@ -59,8 +63,16 @@ public class HomeFragment extends Fragment {
         new AsyncApplicationArea().execute();
         // find data sensor type
         new AsyncDataSourceType().execute();
+        // find data feature type
+        new AsyncDataFeature().execute();
+        // find model backend
+        new AsyncModelBackend().execute();
         // find model type
         new AsyncModelType().execute();
+        // find model loss function
+        new AsyncModelLossFunction().execute();
+        // find model optimiser
+        new AsyncModelOptimiser().execute();
         // find layer type
         new AsyncLayerType().execute();
         // find core layer type
@@ -165,6 +177,72 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    // async data feature
+    private class AsyncDataFeature extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = OntologyAPI.getDataFeature();
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            JSONObject json;
+            List<String> myList;
+            try {
+                json = new JSONObject(result);
+                JSONArray jsonArray = json.getJSONObject("results").getJSONArray("bindings");
+                myList = new ArrayList<String>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    if (jsonObject.has("dataFeature")) {
+                        String a = jsonObject.getJSONObject("dataFeature").getString("value");
+                        String[] as = a.split(",");
+                        for (int j = 0; j < as.length; j++) {
+                            myList.add(as[j]);
+                        }
+
+                    }
+                }
+                dataFeatureList = myList;
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // async model backend
+    private class AsyncModelBackend extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = OntologyAPI.getModelBackend();
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            JSONObject json;
+            List<String> myList;
+            try {
+                json = new JSONObject(result);
+                JSONArray jsonArray = json.getJSONObject("results").getJSONArray("bindings");
+                myList = new ArrayList<String>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    if (jsonObject.has("backendName")) {
+                        String a = jsonObject.getJSONObject("backendName").getString("value");
+                        myList.add(a);
+                    }
+                }
+                modelBackendList = myList;
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
     // async model type
     private class AsyncModelType extends AsyncTask<String, Void, String> {
         @Override
@@ -189,6 +267,68 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 modelTypeList = myList;
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // async model loss function
+    private class AsyncModelLossFunction extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = OntologyAPI.getModelLossFunction();
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            JSONObject json;
+            List<String> myList;
+            try {
+                json = new JSONObject(result);
+                JSONArray jsonArray = json.getJSONObject("results").getJSONArray("bindings");
+                myList = new ArrayList<String>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    if (jsonObject.has("lossFunctionName")) {
+                        String a = jsonObject.getJSONObject("lossFunctionName").getString("value");
+                        myList.add(a);
+                    }
+                }
+                modelLossFunctionList = myList;
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // async model optimiser
+    private class AsyncModelOptimiser extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = OntologyAPI.getModelOptimiser();
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            JSONObject json;
+            List<String> myList;
+            try {
+                json = new JSONObject(result);
+                JSONArray jsonArray = json.getJSONObject("results").getJSONArray("bindings");
+                myList = new ArrayList<String>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    if (jsonObject.has("optimiserName")) {
+                        String a = jsonObject.getJSONObject("optimiserName").getString("value");
+                        myList.add(a);
+                    }
+                }
+                modelOptimiserList = myList;
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

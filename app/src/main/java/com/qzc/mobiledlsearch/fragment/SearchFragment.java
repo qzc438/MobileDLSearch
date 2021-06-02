@@ -250,9 +250,9 @@ public class SearchFragment extends Fragment {
 
     private void createItems() {
         addItem("Application", new String[]{"Domain", "Area"}, R.color.pink);
-        addItem("Data", new String[]{"Subject", "Sensor Type", "Sensor Base", "Activity Type", "Location"}, R.color.yellow);
-        addItem("Model", new String[]{"Backend", "Model Type", "Loss Function", "Optimiser", "Performance"}, R.color.green);
-        addItem("Layer", new String[]{"Layer Type", "Core", "Functional","Activation", "Argument"}, R.color.blue);
+        addItem("Data", new String[]{"Sensor", "Feature"}, R.color.yellow);
+        addItem("Model", new String[]{"Backend", "Type", "Loss Function", "Optimiser"}, R.color.green);
+        addItem("Layer", new String[]{"Core", "Functional"}, R.color.blue);
     }
 
     private void addItem(String title, String[] subItems, int colorRes) {
@@ -309,16 +309,9 @@ public class SearchFragment extends Fragment {
                     // myList.add("Daily Life Monitoring");
                     // myList.add("Personal Biometric Signature");
                     // myList.add("Elderly And Youth Care");
-                }else if (subTitle.equals("Subject")){
-                    List<String> myList = new ArrayList<>();
-                    myList.add("Single Subject");
-                    myList.add("Multiple Subject");
-                    multiSelectionListSpinner.setTitle(subTitle);
-                    multiSelectionListSpinner.setItems(myList);
-                }else if (subTitle.equals("Sensor Type")){
+                }else if (subTitle.equals("Sensor")){
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.dataSensorTypeList);
-                    multiSelectionListSpinner.setTitle(subTitle);
                     multiSelectionListSpinner.setItems(myList);
                     // myList.add("Accelerometer");
                     // myList.add("Gyroscope");
@@ -327,35 +320,22 @@ public class SearchFragment extends Fragment {
                     // myList.add("Temperature Sensor");
                     // myList.add("Humidity Sensor");
                     // myList.add("Camera");
-                }else if (subTitle.equals("Sensor Base")){
+                }else if (subTitle.equals("Feature")){
                     List<String> myList = new ArrayList<>();
-                    myList.add("Arm");
-                    myList.add("Belt");
-                    myList.add("Pocket");
-                    myList.add("Waist");
-                    multiSelectionListSpinner.setTitle(subTitle);
+                    myList.addAll(HomeFragment.dataFeatureList);
                     multiSelectionListSpinner.setItems(myList);
-                }else if (subTitle.equals("Activity Type")){
-                    List<String> myList = new ArrayList<>();
-                    myList.add("Living Activity");
-                    myList.add("Working Activity");
-                    myList.add("Health Activity");
-                    multiSelectionListSpinner.setTitle(subTitle);
-                    multiSelectionListSpinner.setItems(myList);
-                }else if (subTitle.equals("Location")){
-                    List<String> myList = new ArrayList<>();
-                    myList.add("Single Location");
-                    myList.add("Multiple Location");
-                    multiSelectionListSpinner.setTitle(subTitle);
-                    multiSelectionListSpinner.setItems(myList);
+                    // myList.add("Arm");
+                    // myList.add("Belt");
+                    // myList.add("Pocket");
+                    // myList.add("Waist");
                 }else if (subTitle.equals("Backend")){
                     List<String> myList = new ArrayList<>();
-                    myList.add("TensorFlow");
-                    myList.add("Keras");
-                    myList.add("Pytorch");
-                    multiSelectionListSpinner.setTitle(subTitle);
+                    myList.addAll(HomeFragment.modelBackendList);
                     multiSelectionListSpinner.setItems(myList);
-                }else if (subTitle.equals("Model Type")){
+                    // myList.add("TensorFlow");
+                    // myList.add("Keras");
+                    // myList.add("Pytorch");
+                }else if (subTitle.equals("Type")){
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.modelTypeList);
                     multiSelectionListSpinner.setTitle(subTitle);
@@ -364,32 +344,16 @@ public class SearchFragment extends Fragment {
                     // myList.add("RNN");
                 }else if (subTitle.equals("Loss Function")) {
                     List<String> myList = new ArrayList<>();
-                    myList.add("Binary Crossentropy");
-                    myList.add("Categorical Crossentropy");
-                    multiSelectionListSpinner.setTitle(subTitle);
+                    myList.addAll(HomeFragment.modelLossFunctionList);
                     multiSelectionListSpinner.setItems(myList);
+                    // myList.add("Binary Crossentropy");
+                    // myList.add("Categorical Crossentropy");
                 }else if (subTitle.equals("Optimiser")) {
                     List<String> myList = new ArrayList<>();
-                    myList.add("Adam");
-                    myList.add("SGD");
-                    multiSelectionListSpinner.setTitle(subTitle);
+                    myList.addAll(HomeFragment.modelOptimiserList);
                     multiSelectionListSpinner.setItems(myList);
-                }else if (subTitle.equals("Performance")) {
-                    List<String> myList = new ArrayList<>();
-                    myList.add("Loss");
-                    myList.add("Accruacy");
-                    myList.add("Precision");
-                    myList.add("Recall");
-                    myList.add("F1 Score");
-                    multiSelectionListSpinner.setTitle(subTitle);
-                    multiSelectionListSpinner.setItems(myList);
-                }else if (subTitle.equals("Layer Type")) {
-                    List<String> myList = new ArrayList<>();
-                    myList.addAll(HomeFragment.layerTypeList);
-                    multiSelectionListSpinner.setTitle(subTitle);
-                    multiSelectionListSpinner.setItems(myList);
-                    // myList.add("Core Layer");
-                    // myList.add("Functional Layer");
+                    // myList.add("Adam");
+                    // myList.add("SGD");
                 } else if (subTitle.equals("Core")) {
                     List<String> myList = new ArrayList<>();
                     myList.addAll(HomeFragment.coreLayerTypeList);
@@ -406,19 +370,6 @@ public class SearchFragment extends Fragment {
                     // myList.add("Reshaping Layer");
                     // myList.add("Pooling Layer");
                     // myList.add("Dropout Layer");
-                } else if (subTitle.equals("Activation")) {
-                    List<String> myList = new ArrayList<>();
-                    myList.add("ReLU");
-                    myList.add("Softmax");
-                    multiSelectionListSpinner.setTitle(subTitle);
-                    multiSelectionListSpinner.setItems(myList);
-                } else if (subTitle.equals("Argument")) {
-                    List<String> myList = new ArrayList<>();
-                    myList.add("Initialiser");
-                    myList.add("Constraint");
-                    myList.add("Regulariser");
-                    multiSelectionListSpinner.setTitle(subTitle);
-                    multiSelectionListSpinner.setItems(myList);
                 } else {
                     List<String> myList = new ArrayList<>();
                     myList.add("No options available");
@@ -448,11 +399,23 @@ public class SearchFragment extends Fragment {
                 if(title.equals("Application") && subTitle.equals("Area")){
                     parameterBean.setApplicationArea(strings);
                 }
-                if(title.equals("Data") && subTitle.equals("Sensor Type")){
+                if(title.equals("Data") && subTitle.equals("Sensor")){
                     parameterBean.setDataSourceType(strings);
                 }
-                if(title.equals("Model") && subTitle.equals("Model Type")){
+                if(title.equals("Data") && subTitle.equals("Feature")){
+                    parameterBean.setDataFeature(strings);
+                }
+                if(title.equals("Model") && subTitle.equals("Backend")){
+                    parameterBean.setModelBackend(strings);
+                }
+                if(title.equals("Model") && subTitle.equals("Type")){
                     parameterBean.setModelType(strings);
+                }
+                if(title.equals("Model") && subTitle.equals("Loss Function")){
+                    parameterBean.setModelLossFunction(strings);
+                }
+                if(title.equals("Model") && subTitle.equals("Optimiser")){
+                    parameterBean.setModelOptimiser(strings);
                 }
 
                 Gson gson = new Gson();
