@@ -25,6 +25,7 @@
     <string name="start">Start</string>
     <string name="resume">Resume</string>
     <string name="stop">Stop</string>
+    <string name="report">Report</string>
 
     <string name="accelerometer_title">Accelerometer</string>
     <string name="accelerometer_x_value">X Value: %1$.2f</string>

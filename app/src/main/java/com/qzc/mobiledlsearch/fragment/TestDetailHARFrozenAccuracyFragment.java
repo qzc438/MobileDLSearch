@@ -22,17 +22,18 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ornach.nobobutton.NoboButton;
 import com.qzc.mobiledlsearch.HARFrozenClassifier;
 import com.qzc.mobiledlsearch.R;
+import com.qzc.mobiledlsearch.utils.FileUtil;
 import com.qzc.mobiledlsearch.utils.ToastUtil;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import at.grabner.circleprogress.CircleProgressView;
@@ -42,6 +43,7 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
     private ImageView btn_back;
+    protected Context context;
 
     // real-time testing
     private Spinner spn_activity_list;
@@ -50,6 +52,7 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
     private NoboButton btn_start_test;
     private NoboButton btn_resume_test;
     private NoboButton btn_stop_test;
+    private NoboButton btn_report;
     private CircleProgressView circleView_test_accuracy;
     private TextView txt_test_attempts;
     private ScrollView scrollLogs;
@@ -98,6 +101,12 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
         args.putString(EXTRA_TEXT, text);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Nullable
@@ -159,6 +168,7 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
         btn_start_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FileUtil.clearFile(context,selectedLabel);
                 resultList.clear();
                 // start sensor
                 startSensors();
@@ -194,6 +204,20 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
                 resultList.clear();
                 stopSensors();
                 timer.stop();
+            }
+        });
+
+        btn_report = view.findViewById(R.id.btn_report);
+        btn_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment selectedScreen = ReportFragment.createFor("Line Chart");
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.container, selectedScreen);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
 
@@ -280,7 +304,6 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
                 && lx.size() >= N_SAMPLES && ly.size() >= N_SAMPLES && lz.size() >= N_SAMPLES
                 && gx.size() >= N_SAMPLES && gy.size() >= N_SAMPLES && gz.size() >= N_SAMPLES
         ) {
-
             if (resultList.size() < Integer.parseInt(etxt_attempts.getText().toString()))
             {
                 double maValue; double mgValue; double mlValue;
@@ -337,13 +360,17 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
                 circleView_test_accuracy.setValueAnimated(accuracy*100);
                 txt_test_attempts.setText("Attempts: " + resultList.size());
 
+                FileUtil.writeToFile( resultList.size() + "#" + accuracy*100, this.getContext(), selectedLabel);
+
                 ax.clear(); ay.clear(); az.clear();
                 lx.clear(); ly.clear(); lz.clear();
                 gx.clear(); gy.clear(); gz.clear();
                 ma.clear(); ml.clear(); mg.clear();
 
             }else{
+                String strFile = FileUtil.readFromFile(this.getContext(), selectedLabel);
                 timer.stop();
+                stopSensors();
             }
         }
     }
