@@ -20,7 +20,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.qzc.mobiledlsearch.R;
 import com.qzc.mobiledlsearch.utils.MyMarkerView;
 
@@ -52,7 +51,7 @@ public class ReportFragment extends Fragment{
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.frag_simple_line, container, false);
+        View v = inflater.inflate(R.layout.fragment_line, container, false);
 
         chart = v.findViewById(R.id.lineChart1);
         chart.getDescription().setEnabled(false);
