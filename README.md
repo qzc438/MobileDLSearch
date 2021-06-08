@@ -13,7 +13,7 @@
 ### Progress bar: https://github.com/dinuscxj/CircleProgressBar
 ### Dialog: https://github.com/afollestad/material-dialogs
 ### Button: https://github.com/alex31n/NoboButton
-### Diagram: https://github.com/PhilJay/MPAndroidChart
+### Chart: https://github.com/PhilJay/MPAndroidChart
 
 ## Server Reference
 ### Android downloader: https://github.com/huxq17/Pump
