@@ -26,6 +26,8 @@
     <string name="resume">Resume</string>
     <string name="stop">Stop</string>
     <string name="report">Report</string>
+    <string name="accuracy_attempt">Accuracy Change in Each Attempt</string>
+    <string name="accuracy_activity">Mean Accuracy in Each Activity</string>
 
     <string name="accelerometer_title">Accelerometer</string>
     <string name="accelerometer_x_value">X Value: %1$.2f</string>

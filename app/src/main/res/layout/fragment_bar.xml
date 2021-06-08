@@ -11,13 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/accuracy_attempt"
+        android:text="@string/accuracy_activity"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart1"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"

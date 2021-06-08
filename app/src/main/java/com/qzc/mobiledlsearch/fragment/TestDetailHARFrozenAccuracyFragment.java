@@ -211,7 +211,7 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
         btn_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment selectedScreen = ReportFragment.createFor("Line Chart");
+                Fragment selectedScreen = ReportFragment.createFor("Report");
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.replace(R.id.container, selectedScreen);
@@ -362,13 +362,18 @@ public class TestDetailHARFrozenAccuracyFragment extends Fragment implements Sen
 
                 FileUtil.writeToFile( resultList.size() + "#" + accuracy*100, this.getContext(), selectedLabel);
 
+                // if it is the last attempt, save the accuracy in the summary
+                if(resultList.size() == Integer.parseInt(etxt_attempts.getText().toString())){
+                    FileUtil.writeToFile( resultList.size() + "#" + accuracy*100, this.getContext(), selectedLabel+"-Summary");
+                }
+
                 ax.clear(); ay.clear(); az.clear();
                 lx.clear(); ly.clear(); lz.clear();
                 gx.clear(); gy.clear(); gz.clear();
                 ma.clear(); ml.clear(); mg.clear();
 
             }else{
-                String strFile = FileUtil.readFromFile(this.getContext(), selectedLabel);
+                // String strFile = FileUtil.readFromFile(this.getContext(), selectedLabel);
                 timer.stop();
                 stopSensors();
             }
