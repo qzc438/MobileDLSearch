@@ -2,6 +2,7 @@
 ### An intuitive mobile app for searching deep learning models
 ### The data is retrieved from API server: https://github.com/qzc438/OntologyAPI
 ### We also have a web app that can be found in: https://github.com/qzc438/Ontology
+### DL model converter: https://github.com/junyao-d/dlmodel-converter
 
 ## UI Reference
 ### Awesome Android UI: https://github.com/wasabeef/awesome-android-ui
