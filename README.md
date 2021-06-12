@@ -2,6 +2,7 @@
 ### An intuitive mobile app for searching deep learning models
 ### The data is retrieved from API server: https://github.com/qzc438/OntologyAPI
 ### We also have a web app that can be found in: https://github.com/qzc438/Ontology
+### DL model converter: https://github.com/junyao-d/dlmodel-converter
 
 ## UI Reference
 ### Awesome Android UI: https://github.com/wasabeef/awesome-android-ui
@@ -19,7 +20,7 @@
 ### Android downloader: https://github.com/huxq17/Pump
 ### Android SPARQL: https://github.com/BorderCloud/SPARQL-ANDROID
 
-## Deep Learning Compiler
+## Deep Learning Compiler Reference
 ### Tutorial: https://medium.com/@estebanuri/real-time-face-recognition-with-android-tensorflow-lite-14e9c6cc53a5
 ### Sensor：https://github.com/zhangzhao156/HAR-on-Smartphone
 ### Keras: https://github.com/amitshekhariitbhu/Android-TensorFlow-Lite-Example (Image and HAR Test)
