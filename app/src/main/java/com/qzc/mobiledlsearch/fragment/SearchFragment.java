@@ -96,7 +96,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(applicationNameList.size()==0){
+                if(applicationNameList.size()==0 || applicationNameList==null){
                     ToastUtil.showText(SearchFragment.this.getActivity(), "No results available.\r\nPlease change your filters.");
                 } else{
                     Fragment selectedScreen = OverviewFragment.createFor("Overview");
@@ -416,6 +416,12 @@ public class SearchFragment extends Fragment {
                 }
                 if(title.equals("Model") && subTitle.equals("Optimiser")){
                     parameterBean.setModelOptimiser(strings);
+                }
+                if(title.equals("Layer") && subTitle.equals("Core")){
+                    parameterBean.setCoreLayer(strings);
+                }
+                if(title.equals("Layer") && subTitle.equals("Functional")){
+                    parameterBean.setFunctionalLayer(strings);
                 }
 
                 Gson gson = new Gson();
