@@ -2,6 +2,7 @@ package com.qzc.mobiledlsearch.fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import at.grabner.circleprogress.CircleProgressView;
 
@@ -66,6 +71,9 @@ public class SearchFragment extends Fragment {
     private SeekBar seekBar_f1score;
 
     private MultiSelectionSpinner multiSelectionListSpinner;
+
+    private TextView average_time;
+    private Long averageTime;
 
     public static SearchFragment createFor(String text) {
         SearchFragment fragment = new SearchFragment();
@@ -246,6 +254,8 @@ public class SearchFragment extends Fragment {
         // show title and sub-title
         mExpandingList = view.findViewById(R.id.expanding_list_main);
         createItems();
+
+        average_time = view.findViewById(R.id.average_time);
     }
 
     private void createItems() {
@@ -426,9 +436,13 @@ public class SearchFragment extends Fragment {
 
                 Gson gson = new Gson();
                 String jsonParameterBean = gson.toJson(parameterBean);
-                new SearchFragment.AsyncOverviewInformation().execute(jsonParameterBean);
-
-                // ToastUtil.showText(SearchFragment.this.getActivity(), parameterBean.getApplicationArea().toString());
+                // test purpose
+//                 if (parameterBean.getApplicationDomain()!=null){
+//                 if (parameterBean.getApplicationDomain()!=null && parameterBean.getModelLossFunction()!=null){
+//                 if (parameterBean.getApplicationDomain()!=null && parameterBean.getFunctionalLayer()!=null){
+                    new SearchFragment.AsyncOverviewInformation().execute(jsonParameterBean);
+                    average_time.setText(averageTime + "");
+//                }
             }
         });
     }
@@ -438,9 +452,21 @@ public class SearchFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            String result = OntologyAPI.getOverviewInformation(strings[0]);
+            // test purpose, please set it to 1 normally
+            Long startTime = System.currentTimeMillis();
+            String result = "";
+            int numberOfAttempt = 1;
+            for (int i = 0; i<numberOfAttempt; i++){
+                result = OntologyAPI.getOverviewInformation(strings[0]);
+            }
+            Long endTime = System.currentTimeMillis();
+            Long duration =  endTime - startTime;
+            Long averageTime = duration/numberOfAttempt;
+            // ToastUtil.showText(SearchFragment.this.getActivity(), averageTime + "");
+            Log.e("Average Time in 1000 queries", averageTime + "");
             return result;
         }
+
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);

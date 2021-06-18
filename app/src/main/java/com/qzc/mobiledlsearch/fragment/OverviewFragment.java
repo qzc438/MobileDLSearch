@@ -63,7 +63,7 @@ public class OverviewFragment extends Fragment {
     private static final String EXTRA_TEXT = "text";
     private TextView fragmentText;
 
-    private final int[] pics = {R.drawable.lstm, R.drawable.lstm_stacked, R.drawable.lstm_attantion, R.drawable.lstm, R.drawable.lstm_stacked};
+    private final int[] pics = {R.drawable.cnn, R.drawable.cnn, R.drawable.cnn, R.drawable.cnn, R.drawable.cnn};
 
     private String[] applicationNames = SearchFragment.applicationNameList.toArray(new String[SearchFragment.applicationNameList.size()]);
     private String[] datas = SearchFragment.dataList.toArray(new String[SearchFragment.dataList.size()]);
