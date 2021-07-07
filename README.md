@@ -29,6 +29,9 @@
 ### https://github.com/cedrickchee/pytorch-mobile-android (Image, NLP)
 ### https://github.com/cedrickchee/pytorch-mobile-kit (Image, NLP)
 
+## Leanring Reference
+### Kotlin: https://github.com/Jetictors/KotlinLearn
+
 ## Thanks to my HD+ supervisors
 ### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein
 ### Dr Yuxin Zhang, Dr Abdur Rahim Mohammad Forkan
