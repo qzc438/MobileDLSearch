@@ -32,6 +32,6 @@
 ## Leanring Reference
 ### Kotlin: https://github.com/Jetictors/KotlinLearn
 
-## Thanks to my HD+ supervisors
+## Thanks to my HD+ master thesis supervisors
 ### Dr Pari Delir Haghighi, A/Prof Prem Prakash Jayaraman, Prof Frada Burstein
 ### Dr Yuxin Zhang, Dr Abdur Rahim Mohammad Forkan
